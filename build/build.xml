@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="ThinWire Playground Demo" default="help" basedir=".">
+	<target name="-init">
+		<!-- Path locations -->
+		<property name="path.library" value="../lib"/>
+		<property name="path.temp" value="../temp"/>
+		<property name="path.source" value="${path.temp}_src"/>
+		<property name="path.binary" value="${path.temp}_bin"/>
+		
+		<!-- Version Information -->
+		<property name="versionInfo.productVersion" value="1.0"/>
+		<property name="versionInfo.companyName" value="Custom Credit Systems"/>
+		<property name="versionInfo.originalName" value="thinwire-playground"/>
+		<property name="versionInfo.originalFilename" value="${versionInfo.originalName}.jar"/>
+
+		<!-- Delete working folders -->
+		<delete dir="${path.temp}"/>
+		<delete dir="${path.source}"/>
+		<delete dir="${path.binary}"/>
+
+		<!-- Create empty working folders -->
+		<mkdir dir="${path.temp}"/>
+		<mkdir dir="${path.source}"/>
+		<mkdir dir="${path.binary}"/>
+
+		<!-- Copy source files to working folder -->
+		<copy todir="${path.source}" overwrite="true">
+			<fileset dir="../src" defaultexcludes="yes">
+				<include name="thinwire/apps/playground/**/*"/>
+			</fileset>
+		</copy>
+				
+		<tstamp/>
+	</target>
+	
+	<!-- Compile the framework, create a jar and create a distribution zip -->
+	<target name="dist" depends="-init,-compile,-jar,-zip,-clean"/>
+	
+	<!-- Compile the framework, create a jar, translate to Java 1.4 and create a distribution zip -->
+	<target name="dist14" depends="-init,-compile,-retroweaver,-jar,-zipJava14,-clean"/>
+	
+	<target name="-compile">
+		<echo message="Compiling Java Source"/>
+		
+		<javac srcdir="${path.source}" destdir="${path.temp}" target="1.5" source="1.5" debug="yes">
+			<classpath>
+				<fileset dir="./" includes="*/**"/>
+				<fileset dir="${path.library}" includes="*/**"/>
+			</classpath>
+	    </javac>
+		
+		<copy todir="${path.temp}" overwrite="true">
+			<fileset dir="${path.source}" defaultexcludes="yes">
+				<include name="thinwire/apps/playground/**/resources/*.*"/>
+			</fileset>
+		</copy>		
+	</target>
+		
+	<target name="-retroweaver">
+		<echo message="Applying Retroweaver Translation for Java 1.4 Support"/>
+		
+		<taskdef name="retroweaver" classname="com.rc.retroweaver.ant.RetroWeaverTask">
+	    	<classpath>
+				<fileset dir="./" includes="*/**"/>
+	    	</classpath>
+	    </taskdef>
+		
+		<retroweaver srcdir="${path.temp}" target="1.4"/>
+	</target>
+	
+	<target name="-jar">
+		<jar jarfile="../${versionInfo.originalFilename}" basedir="${path.temp}">
+			<manifest>
+				<attribute name="Manifest-Version" value="2.0"/>
+				<attribute name="Built-By" value="${user.name}"/>
+
+				<section name="thinwire/apps/playground/">
+					<attribute name="Implementation-Title" value="ThinWire Playground Demo"/>
+					<attribute name="Implementation-Version" value="${versionInfo.productVersion}"/>
+					<attribute name="Implementation-Vendor" value="${versionInfo.companyName}"/>
+				</section>
+			</manifest>
+		</jar>		
+	</target>
+	
+	<target name="-zip">
+		<copy todir="${path.binary}" flatten="true">
+			<fileset dir="../">
+				<include name="${versionInfo.originalFilename}"/>
+				<include name="LICENSE.txt"/>
+			</fileset>
+			
+			<fileset dir="${path.library}" includes="*/**"/>
+		</copy>	
+			
+		<zip destfile="../${versionInfo.originalName}-${versionInfo.productVersion}.zip" basedir="${path.binary}" filesonly="true"/>
+	</target>
+	
+	<target name="-zipJava14">
+		<copy todir="${path.binary}" flatten="true">
+			<fileset dir="../">
+				<include name="${versionInfo.originalFilename}"/>
+				<include name="LICENSE.txt"/>
+			</fileset>
+			
+			<fileset dir="${path.library}" includes="*/**"/>
+			<fileset dir="./" includes="retroweaver*/retroweaver-rt*.jar"/>
+		</copy>
+		
+		<zip destfile="../${versionInfo.originalName}-${versionInfo.productVersion}-java14.zip" basedir="${path.binary}" filesonly="true"/>
+	</target>	
+	
+	<target name="-clean">
+		<delete dir="${path.temp}"/>
+		<delete dir="${path.source}"/>
+		<delete dir="${path.binary}"/>
+		<delete file="../${versionInfo.originalFilename}"/>
+	</target>
+	
+	<!-- Archive the source, including everything needed to build the framework -->
+	<target name="source" depends="-init,-zipSource,-clean"/>
+	
+	<target name="-zipSource">		
+		<copy todir="${path.temp}" overwrite="true">
+			<fileset dir="../" defaultexcludes="yes">
+				<include name="lib/**/*"/>
+				<include name="src/**/*"/>
+				<include name="build/**/*"/>
+				<include name="LICENSE.txt"/>
+				<include name="README.txt"/>
+			</fileset>
+		</copy>
+
+		<zip destfile="../${versionInfo.originalName}-${versionInfo.productVersion}-src.zip"><fileset dir="${path.temp}"/></zip>
+	</target>
+
+	<target name="help">
+<echo>              ThinWire(TM) Playground Demo
+         Copyright (C) 2003-2006 Custom Credit Systems
+
+The following build targets are available:
+
+ dist        compile the demo, create a jar and package
+	         it along with other required runtime files into
+             a distribution zip.
+
+ dist14      compile a Java 1.4 compatible version of the
+             demo, create a jar and package it along with
+             other required runtime files into a distribution
+             zip.
+	
+ source      create a source only distribution that contains
+             everything necessary to build the demo.
+</echo>
+	</target>
+</project>
