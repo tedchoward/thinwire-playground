@@ -56,7 +56,7 @@ class EventTabSheet extends TabSheet {
             } else if (listener == ItemChangeListener.class) {
                 return "itemChange";
             } else if (listener == KeyPressListener.class) {
-                return "keyPressed";
+                return "keyPress";
             } else {
                 throw new IllegalStateException("unknown listener type");
             }

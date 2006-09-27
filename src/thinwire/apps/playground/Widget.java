@@ -56,8 +56,8 @@ import thinwire.ui.WebBrowser;
 enum Widget {    
     LABEL(Label.class),
     IMAGE(Image.class, 250, 50),
-    DIVIDER_HORIZONTAL(Divider.class, 300, 30),
-    DIVIDER_VERTICAL(Divider.class, 30, 300, "Vertical"),
+    DIVIDER_HORIZONTAL(Divider.class, 200, 30),
+    DIVIDER_VERTICAL(Divider.class, 30, 150, "Vertical"),
     BUTTON(Button.class, 90, 25),
     CHECK_BOX(CheckBox.class),
     RADIO_BUTTON(RadioButton.class),
@@ -70,13 +70,13 @@ enum Widget {
     //GRID_BOX_MULTI(GridBox.class, 250, 150, "Multi-Tiered"),
     TREE(Tree.class, 150, 250),
     MENU(Menu.class, 400, 25),
-    WEB_BROWSER(WebBrowser.class, 400, 300),
+    WEB_BROWSER(WebBrowser.class, 350, 300),
     TAB_FOLDER(TabFolder.class, 350, 250),
     PANEL(Panel.class, 350, 250),
-    SLIDER_HORIZONTAL(Slider.class, 150, 25),
-    SLIDER_VERTICAL(Slider.class, -1, -1, "Vertical"),
+    SLIDER_HORIZONTAL(Slider.class),
+    SLIDER_VERTICAL(Slider.class, 25, 150, "Vertical"),
     PROGRESS_BAR_HORIZONTAL(ProgressBar.class),
-    PROGRESS_BAR_VERTICAL(ProgressBar.class, -1, -1, "Vertical");
+    PROGRESS_BAR_VERTICAL(ProgressBar.class, 25, 150, "Vertical");
     
     private Class type;
     private int defaultWidth;

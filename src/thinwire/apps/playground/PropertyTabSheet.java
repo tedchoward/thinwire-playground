@@ -50,7 +50,7 @@ class PropertyTabSheet extends TabSheet {
     private Map<Property, MaskEditorComponent> propToEditor = new HashMap<Property, MaskEditorComponent>();
     
     PropertyTabSheet(final Panel panel, final boolean styleProperties) {
-        super(styleProperties ? "Styles" : "Properites");
+        super(styleProperties ? "Styles" : "Properties");
         final GridBox gb = initGridBox();
         gb.setPosition(GAP, GAP);
         final Divider div = new Divider();
