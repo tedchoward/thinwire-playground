@@ -25,6 +25,9 @@
 package thinwire.apps.playground;
 
 import java.lang.reflect.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import thinwire.ui.*;
 import thinwire.ui.style.*;
@@ -55,6 +58,7 @@ enum Property {
     BUTTON_CHECKED(RadioButton.class, RadioButton.PROPERTY_CHECKED, boolean.class),
     BOX_CHECKED(CheckBox.class, CheckBox.PROPERTY_CHECKED, boolean.class),
     LINK_LOCATION(Hyperlink.class, Hyperlink.PROPERTY_LOCATION, String.class),
+    SELECTED_DATE(DateBox.class, DateBox.PROPERTY_SELECTED_DATE, Date.class),
     FULL_ROW_CHECK_BOX(GridBox.class, GridBox.PROPERTY_FULL_ROW_CHECK_BOX, boolean.class),
     VISIBLE_CHECK_BOXES(GridBox.class, GridBox.PROPERTY_VISIBLE_CHECK_BOXES, boolean.class),
     VISIBLE_HEADER(GridBox.class, GridBox.PROPERTY_VISIBLE_HEADER, boolean.class),
@@ -62,6 +66,9 @@ enum Property {
     ROOT_ITEM_VISIBLE(Tree.class, Tree.PROPERTY_ROOT_ITEM_VISIBLE, boolean.class),
     RESIZE_ALLOWED(Dialog.class, Dialog.PROPERTY_RESIZE_ALLOWED, boolean.class),
     BACKGROUND_COLOR(Background.class, Background.PROPERTY_BACKGROUND_COLOR, Color.class),
+    BACKGROUND_IMAGE(Background.class, Background.PROPERTY_BACKGROUND_IMAGE, String.class),
+    BACKGROUND_POSITION(Background.class, Background.PROPERTY_BACKGROUND_POSITION, Background.Position.class),
+    BACKGROUND_REPEAT(Background.class, Background.PROPERTY_BACKGROUND_REPEAT, Background.Repeat.class),
     FONT_BOLD(Font.class, Font.PROPERTY_FONT_BOLD, boolean.class),
     FONT_ITALIC(Font.class, Font.PROPERTY_FONT_ITALIC, boolean.class),
     FONT_UNDERLINE(Font.class, Font.PROPERTY_FONT_UNDERLINE, boolean.class),
@@ -71,6 +78,7 @@ enum Property {
     BORDER_TYPE(Border.class, Border.PROPERTY_BORDER_TYPE, Border.Type.class),
     BORDER_SIZE(Border.class, Border.PROPERTY_BORDER_SIZE, int.class),
     BORDER_COLOR(Border.class, Border.PROPERTY_BORDER_COLOR, Color.class),
+    BORDER_IMAGE(Border.class, Border.PROPERTY_BORDER_IMAGE, String.class),
     FX_POSITION_CHANGE(FX.class, FX.PROPERTY_FX_POSITION_CHANGE, FX.Type.class),
     FX_SIZE_CHANGE(FX.class, FX.PROPERTY_FX_SIZE_CHANGE, FX.Type.class),
     FX_VISIBLE_CHANGE(FX.class, FX.PROPERTY_FX_VISIBLE_CHANGE, FX.Type.class),
@@ -80,6 +88,7 @@ enum Property {
     WRAP_TEXT(Label.class, Label.PROPERTY_WRAP_TEXT, boolean.class);
     
     private static final String[] TRUE_FALSE = new String[]{"true", "false"};
+    private static final String DATE_TYPE_FORMAT = "MM/dd/yyyy";
     
     private Class objectType;
     private String name;
@@ -127,6 +136,8 @@ enum Property {
         } else if (type == int.class) {
             editMask = name == Component.PROPERTY_X || name == Component.PROPERTY_Y ? "-####" : "####";
             alignX = AlignX.RIGHT;
+        } else if (type == Date.class) {
+            editMask = DATE_TYPE_FORMAT;
         } else if (name == MaskEditorComponent.PROPERTY_EDIT_MASK) {
             options = new String[] {
                     "-###,###,###.##",
@@ -141,6 +152,15 @@ enum Property {
                     "AAAAAAAA",
                     "aaaaaaaa",
             };
+        } else if (name == Border.PROPERTY_BORDER_IMAGE) {
+            options = new String[]{
+                Main.RES_PATH + "BorderSize2.png",
+                Main.RES_PATH + "BorderSize3.png",
+                Main.RES_PATH + "BorderSize10.png",
+                Main.RES_PATH + "BorderSize28.png",
+            };
+        } else if (name == Background.PROPERTY_BACKGROUND_IMAGE) {
+            options = new String[]{Main.RES_PATH + "BackgroundOrangeLRFade.png"};
         } else if (name == ImageComponent.PROPERTY_IMAGE) {
             Widget[] values = Widget.values();
             options = new String[values.length + 2];
@@ -185,6 +205,15 @@ enum Property {
             options = new String[values.length + 1];
             editAllowed = true;
             options[0] = "Tahoma, sans-serif";
+
+            for (int i = 0; i < values.length; i++) {
+                options[i + 1] = values[i].toString();
+            }
+        } else if (type == Background.Position.class) {
+            Background.Position[] values = Background.Position.values();
+            options = new String[values.length + 1];
+            editAllowed = true;
+            options[0] = "25% 25%";
 
             for (int i = 0; i < values.length; i++) {
                 options[i + 1] = values[i].toString();
@@ -276,6 +305,8 @@ enum Property {
                 return getter.invoke(comp.getStyle().getBorder());
             } else if (objectType == FX.class) {
                 return getter.invoke(comp.getStyle().getFX());
+            } else if (type == Date.class) {
+                return new SimpleDateFormat(DATE_TYPE_FORMAT).format((Date)getter.invoke(comp));
             } else {            
                 return getter.invoke(comp);
             }
@@ -303,6 +334,12 @@ enum Property {
         
         if (type == String.class) {
             value = str;
+        } else if (type == Date.class) {
+            try {
+                value = new SimpleDateFormat(DATE_TYPE_FORMAT).parse(str);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         } else if (type == boolean.class || type == Boolean.class) {
             value = Boolean.valueOf(str);
         } else if (type == int.class || type == Integer.class) {                            

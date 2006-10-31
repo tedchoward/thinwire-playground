@@ -27,28 +27,7 @@ package thinwire.apps.playground;
 import java.util.HashMap;
 import java.util.Map;
 
-import thinwire.ui.Button;
-import thinwire.ui.CheckBox;
-import thinwire.ui.Component;
-import thinwire.ui.Divider;
-import thinwire.ui.DropDownGridBox;
-import thinwire.ui.GridBox;
-import thinwire.ui.Hyperlink;
-import thinwire.ui.Image;
-import thinwire.ui.Label;
-import thinwire.ui.Menu;
-import thinwire.ui.Panel;
-import thinwire.ui.ProgressBar;
-import thinwire.ui.RadioButton;
-import thinwire.ui.RangeComponent;
-import thinwire.ui.Slider;
-import thinwire.ui.TabFolder;
-import thinwire.ui.TabSheet;
-import thinwire.ui.TextArea;
-import thinwire.ui.TextComponent;
-import thinwire.ui.TextField;
-import thinwire.ui.Tree;
-import thinwire.ui.WebBrowser;
+import thinwire.ui.*;
 
 /**
  * @author Joshua J. Gertzen
@@ -64,9 +43,13 @@ enum Widget {
     HYPERLINK(Hyperlink.class),
     TEXT_FIELD(TextField.class),
     TEXT_AREA(TextArea.class, 250, 150),
+    DATE_BOX(DateBox.class, 250, 200),
+    DROP_DOWN_DATE_BOX(DropDownDateBox.class),
     DROP_DOWN_GRID_BOX(DropDownGridBox.class),
+    DROP_DOWN_GRID_BOX_CHECK(DropDownGridBox.class, -1, -1, "CheckBoxes"),
     DROP_DOWN_GRID_BOX_MULTI(DropDownGridBox.class, -1, -1, "Multi-Tiered"),
     GRID_BOX(GridBox.class, 250, 150),
+    GRID_BOX_CHECK(GridBox.class, 250, 150, "CheckBoxes"),
     //GRID_BOX_MULTI(GridBox.class, 250, 150, "Multi-Tiered"),
     TREE(Tree.class, 150, 250),
     MENU(Menu.class, 400, 25),
@@ -76,7 +59,8 @@ enum Widget {
     SLIDER_HORIZONTAL(Slider.class),
     SLIDER_VERTICAL(Slider.class, 25, 150, "Vertical"),
     PROGRESS_BAR_HORIZONTAL(ProgressBar.class),
-    PROGRESS_BAR_VERTICAL(ProgressBar.class, 25, 150, "Vertical");
+    PROGRESS_BAR_VERTICAL(ProgressBar.class, 25, 150, "Vertical"),
+    FILE_CHOOSER(FileChooser.class, 250, 25);
     
     private Class type;
     private int defaultWidth;
@@ -222,8 +206,9 @@ enum Widget {
                     GridBox child = new GridBox();
                     populateGridBox(comp, child, columnCount, 6, "R" + row.getIndex() + "C:");
                     row.setChild(child);
-                }
+                }                
             } else {
+                if (sideText != null && sideText.indexOf("CheckBoxes") >= 0) gb.setVisibleCheckBoxes(true);
                 populateGridBox(comp, gb, columnCount, 15, "");
             }
         }
