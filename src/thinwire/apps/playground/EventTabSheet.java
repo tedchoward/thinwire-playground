@@ -103,6 +103,10 @@ class EventTabSheet extends TabSheet {
                         if (!(comp instanceof Menu)) gb.getRows().add(newRow(new EventDetail(ActionListener.class, ActionEvent.class, ActionEventComponent.ACTION_DOUBLE_CLICK)));
                     }                    
 
+                    if (comp instanceof DropEventComponent) {
+                        gb.getRows().add(newRow(new EventDetail(DropListener.class, DropEvent.class, null)));
+                    }
+
                     if (comp instanceof ItemChangeEventComponent) {
                         gb.getRows().add(newRow(new EventDetail(ItemChangeListener.class, ItemChangeEvent.class, null)));
                     }
@@ -134,11 +138,24 @@ class EventTabSheet extends TabSheet {
             public void actionPerformed(ActionEvent ev) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(Main.getSimpleClassName(ev.getClass())).append(" ( ");
-                sb.append("source=").append(Main.getSimpleClassName(ev.getSource().getClass()));
-                sb.append(", action=").append(ev.getAction()).append(" )");
+                sb.append("sourceComponent=").append(Main.getSimpleClassName(ev.getSource().getClass()));
+                sb.append(", action=").append(ev.getAction());
+                sb.append(", source=").append(Main.getSimpleClassName(ev.getSource().getClass())).append(" )");
                 printEventMessage(sb.toString());
             }
         };                
+        
+        final DropListener DL = new DropListener() {
+            public void dropPerformed(DropEvent ev) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(Main.getSimpleClassName(ev.getClass())).append(" ( ");
+                sb.append("sourceComponent=").append(Main.getSimpleClassName(ev.getSourceComponent().getClass()));
+                sb.append(", source=").append(Main.getSimpleClassName(ev.getSource().getClass()));
+                sb.append(", dragComponent=").append(Main.getSimpleClassName(ev.getDragComponent().getClass()));
+                sb.append(", dragObject=").append(Main.getSimpleClassName(ev.getDragObject().getClass())).append(" )");
+                printEventMessage(sb.toString());
+            }
+        };
 
         final ItemChangeListener ICL = new ItemChangeListener() {
             public void itemChange(ItemChangeEvent ev) {
@@ -161,7 +178,7 @@ class EventTabSheet extends TabSheet {
                 sb.append(", keyPressCombo=").append(ev.getKeyPressCombo()).append(" )");
                 printEventMessage(sb.toString());
             }
-        };                
+        };
         
         gb.addPropertyChangeListener(GridBox.Row.PROPERTY_ROW_CHECKED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
@@ -195,7 +212,17 @@ class EventTabSheet extends TabSheet {
                                 ((ActionEventComponent)comp).removeActionListener(AL);
                                 countAL = 0;
                             }
-                        }                    
+                        } 
+                    } else if (ed.listener == DropListener.class) {
+                        DropEventComponent dComp = (DropEventComponent)comp;
+                        
+                        if (ev.getNewValue() == Boolean.TRUE) {
+                            gbMsg.addDropListener(dComp, DL);
+                            dComp.addDropListener(gb, DL);
+                        } else {
+                            gbMsg.removeDropListener(DL);
+                            dComp.removeDropListener(DL);
+                        }
                     } else if (ed.listener == ItemChangeListener.class) {
                         if (ev.getNewValue() == Boolean.TRUE) {
                             ((ItemChangeEventComponent)comp).addItemChangeListener(ICL);
