@@ -100,6 +100,7 @@ class EventTabSheet extends TabSheet {
                     
                     if (comp instanceof ActionEventComponent) {
                         gb.getRows().add(newRow(new EventDetail(ActionListener.class, ActionEvent.class, ActionEventComponent.ACTION_CLICK)));
+                        if (!(comp instanceof Menu)) gb.getRows().add(newRow(new EventDetail(ActionListener.class, ActionEvent.class, ActionEventComponent.ACTION_DOUBLE_CLICK)));
                     }                    
 
                     if (comp instanceof ItemChangeEventComponent) {
