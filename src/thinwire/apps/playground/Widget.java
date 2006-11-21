@@ -46,6 +46,7 @@ enum Widget {
     DATE_BOX(DateBox.class, 250, 200),
     DROP_DOWN_DATE_BOX(DropDownDateBox.class),
     DROP_DOWN_GRID_BOX(DropDownGridBox.class),
+    DROP_DOWN_GRID_BOX_EDIT(DropDownGridBox.class, -1, -1, "Edit Allowed"),
     DROP_DOWN_GRID_BOX_CHECK(DropDownGridBox.class, -1, -1, "CheckBoxes"),
     DROP_DOWN_GRID_BOX_MULTI(DropDownGridBox.class, -1, -1, "Multi-Tiered"),
     GRID_BOX(GridBox.class, 250, 150),
@@ -191,6 +192,7 @@ enum Widget {
             int columnCount;
             
             if (comp instanceof DropDownGridBox) {
+                ((DropDownGridBox)comp).setEditAllowed(sideText != null && sideText.equals("Edit Allowed"));
                 gb = ((DropDownGridBox)comp).getComponent();
                 columnCount = 2;
             } else {

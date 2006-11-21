@@ -28,20 +28,28 @@ import thinwire.ui.*;
 import thinwire.ui.event.PropertyChangeEvent;
 import thinwire.ui.event.PropertyChangeListener;
 import thinwire.ui.style.FX;
+import thinwire.ui.layout.SplitLayout;
+import thinwire.ui.layout.TableLayout;
+
 /**
  * @author Joshua J. Gertzen
  */
 class PlayAreaPanel extends Panel {    
-    PlayAreaPanel(Tree tree) {
+    PlayAreaPanel(final PlayTabSheet parent, Tree tree) {
         setScroll(ScrollType.AS_NEEDED);
         getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
         
         tree.addPropertyChangeListener(Tree.Item.PROPERTY_ITEM_SELECTED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
+                setLayout(null);
                 getChildren().clear();
-                Widget w = (Widget)((Tree.Item)ev.getSource()).getUserObject();
                 
-                if (w != null) {
+                Object o = ((Tree.Item)ev.getSource()).getUserObject();
+                
+                if (o instanceof Widget) {
+                    parent.setVisibleComponentEditor(true);
+                    Widget w = (Widget)o;
+                    
                     if (w.getType() == RadioButton.class) {
                         int cnt = 3;
                         int width = w.getDefaultWidth();
@@ -52,6 +60,7 @@ class PlayAreaPanel extends Panel {
                         
                         for (int i = 0; i < cnt; i++) {
                             RadioButton rb = (RadioButton)w.newInstance();
+                            rb.setUserObject(w);
                             rb.setText(rb.getText() + " " + (i + 1));
                             if (cnt == 0) rb.setChecked(true);
                             rbg.add(rb);
@@ -64,6 +73,7 @@ class PlayAreaPanel extends Panel {
                         }
                     } else {
                         Component comp = w.newInstance();
+                        comp.setUserObject(w);
                         comp.setSize(w.getDefaultWidth(), w.getDefaultHeight());
                         int x = getInnerWidth() / 2 - comp.getWidth() / 2;
                         int y = getInnerHeight() / 2 - comp.getHeight() / 2;
@@ -72,6 +82,13 @@ class PlayAreaPanel extends Panel {
                         getChildren().add(comp);
                         comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                     }
+                } else if (o instanceof Example) {
+                    parent.setVisibleComponentEditor(false);
+                    Component comp = ((Example)o).getExample();
+                    comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
+                    setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
+                    getChildren().add(comp);
+                    comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                 }
             }
         });

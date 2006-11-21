@@ -57,38 +57,41 @@ public class Main {
         f.getStyle().getBackground().setColor(Color.DIMGRAY);
         f.getChildren().add(getLeftPanel(tree));
         f.getChildren().add(new MainTabFolder(tree));
-        new SplitLayout(f, SplitLayout.SplitType.VERTICAL, .25);
+        f.setLayout(new SplitLayout(.25, true));
     }
     
     public Panel getLeftPanel(final Tree tree) {
-        final Panel p = new Panel();
-        final Image img = new Image(RES_PATH + "PlaygroundDemoLogo.png");
-        p.getChildren().add(img);
-        p.getChildren().add(tree);
-        
-        p.addPropertyChangeListener(SIZE_ARY, new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                img.setSize(p.getInnerWidth(), 46);
-                tree.setBounds(0, img.getHeight(), p.getInnerWidth(), p.getInnerHeight() - img.getHeight());
-            }
-        });
-        
+        Panel p = new Panel();
+        p.setLayout(new TableLayout(new double[][]{{0},{46, 0}}));
+        p.getChildren().add(new Image(RES_PATH + "PlaygroundDemoLogo.png"));
+        p.getChildren().add(tree.setLimit("0, 1"));
         return p;
     }
     
     public Tree initTree() {
         Tree tree = new Tree();
-        tree.setRootItemVisible(true);
-        Tree.Item root = tree.getRootItem();        
-        root.setText("ThinWire Components");
-        root.setImage(RES_PATH + "Tutorial.png");
+        Tree.Item root = tree.getRootItem();
+        
+        Tree.Item tiComp = new Tree.Item("Components", RES_PATH + "Tutorial.png");
+        tiComp.setExpanded(true);
+        root.getChildren().add(tiComp);
         
         for (Widget w : Widget.values()) {
             Tree.Item item = new Tree.Item(w.getDisplayName(), RES_PATH + getSimpleClassName(w.getType()) + ".png");
             item.setUserObject(w);
-            root.getChildren().add(item);
+            tiComp.getChildren().add(item);
         }
+
+        Tree.Item tiLayout = new Tree.Item("Layout", RES_PATH + "Tutorial.png");
+        tiLayout.setExpanded(true);
+        root.getChildren().add(tiLayout);
         
+        for (Example e : Example.getExamples()) {
+            Tree.Item item = new Tree.Item(e.getName());
+            item.setUserObject(e);
+            tiLayout.getChildren().add(item);
+        }
+
         return tree;
     }
 }

@@ -236,17 +236,22 @@ class CodeTabSheet extends TabSheet {
                     List<Component> children = panel.getChildren();
                     
                     if (!children.isEmpty()) {
-                        StringBuilder sb = new StringBuilder();
-                        
-                        for (int i = 0, cnt = children.size(); i < cnt; i++) {
-                            Component comp = children.get(i);
-                            if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
-                            String var = i == 0 ? "comp" : "comp" + i;
-                            getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
-                            if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
+                        if (children.size() == 1 && children.get(0).getUserObject() == null) {
+                            Example example = (Example)children.get(0);
+                            ta.setText(example.getSourceCode());
+                        } else {
+                            StringBuilder sb = new StringBuilder();
+
+                            for (int i = 0, cnt = children.size(); i < cnt; i++) {
+                                Component comp = children.get(i);
+                                if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
+                                String var = i == 0 ? "comp" : "comp" + i;
+                                getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
+                                if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
+                            }
+
+                            ta.setText(sb.toString());
                         }
-                        
-                        ta.setText(sb.toString());
                     }
                 }
             }

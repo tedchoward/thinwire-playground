@@ -45,24 +45,33 @@ class PlayTabSheet extends TabSheet {
         gb.getColumns().add(gbc);
     }    
     
+    private TabFolder tfEditor;
+    private CodeTabSheet cts;
+    
     PlayTabSheet(Tree tree) {        
         super("Playground");
         getStyle().getBackground().setColor(BACKGROUND);        
         getStyle().getFont().setBold(true);
-        PlayAreaPanel panel = new PlayAreaPanel(tree);
+        PlayAreaPanel panel = new PlayAreaPanel(this, tree);
         getChildren().add(panel);
-        getChildren().add(initPlayTabFolder(panel));
-        new SplitLayout(this, SplitLayout.SplitType.HORIZONTAL, .50);
+        getChildren().add(tfEditor = initPlayTabFolder(panel));
+        setLayout(new SplitLayout(.50));
     }   
     
-    Container initPlayTabFolder(final PlayAreaPanel panel) {
+    void setVisibleComponentEditor(boolean visible) {
+        for (TabSheet ts : tfEditor.getChildren()) {
+            if (ts != cts) ts.setVisible(visible);
+        }
+    }
+    
+    TabFolder initPlayTabFolder(final PlayAreaPanel panel) {
         final TabFolder tf = new TabFolder();
         tf.getStyle().getBackground().setColor(SUBTAB_BACKGROUND);
         tf.getChildren().add(new PropertyTabSheet(panel, false));
         tf.getChildren().add(new PropertyTabSheet(panel, true));
         EventTabSheet ets = new EventTabSheet(panel);
         tf.getChildren().add(ets);
-        tf.getChildren().add(new CodeTabSheet(tf, panel, ets));
+        tf.getChildren().add(cts = new CodeTabSheet(tf, panel, ets));
 
         panel.addItemChangeListener(new ItemChangeListener() {
             public void itemChange(ItemChangeEvent ev) {

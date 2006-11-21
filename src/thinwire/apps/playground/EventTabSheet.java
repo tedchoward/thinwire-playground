@@ -264,7 +264,7 @@ class EventTabSheet extends TabSheet {
         split.setPosition(GAP, GAP);
         split.getChildren().add(gb);
         split.getChildren().add(gbMsg);
-        new SplitLayout(split, SplitLayout.SplitType.HORIZONTAL, .60);
+        split.setLayout(new SplitLayout(.60));
                 
         addPropertyChangeListener(Main.SIZE_ARY, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
