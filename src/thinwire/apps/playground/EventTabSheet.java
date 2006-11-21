@@ -140,7 +140,8 @@ class EventTabSheet extends TabSheet {
                 sb.append(Main.getSimpleClassName(ev.getClass())).append(" ( ");
                 sb.append("sourceComponent=").append(Main.getSimpleClassName(ev.getSource().getClass()));
                 sb.append(", action=").append(ev.getAction());
-                sb.append(", source=").append(Main.getSimpleClassName(ev.getSource().getClass())).append(" )");
+                sb.append(", source=").append(Main.getSimpleClassName(ev.getSource().getClass()));
+                sb.append('{').append(ev.getSource()).append('}').append(" )");
                 printEventMessage(sb.toString());
             }
         };                
@@ -151,8 +152,11 @@ class EventTabSheet extends TabSheet {
                 sb.append(Main.getSimpleClassName(ev.getClass())).append(" ( ");
                 sb.append("sourceComponent=").append(Main.getSimpleClassName(ev.getSourceComponent().getClass()));
                 sb.append(", source=").append(Main.getSimpleClassName(ev.getSource().getClass()));
+                sb.append('{').append(ev.getSource()).append('}');
                 sb.append(", dragComponent=").append(Main.getSimpleClassName(ev.getDragComponent().getClass()));
-                sb.append(", dragObject=").append(Main.getSimpleClassName(ev.getDragObject().getClass())).append(" )");
+                sb.append(", dragObject=").append(Main.getSimpleClassName(ev.getDragObject().getClass()));
+                sb.append('{').append(ev.getDragObject()).append('}');
+                sb.append(" )");
                 printEventMessage(sb.toString());
             }
         };
