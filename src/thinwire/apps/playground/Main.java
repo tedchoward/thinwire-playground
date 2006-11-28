@@ -29,6 +29,7 @@ import thinwire.ui.event.PropertyChangeEvent;
 import thinwire.ui.event.PropertyChangeListener;
 import thinwire.ui.layout.*;
 import thinwire.ui.style.Color;
+import thinwire.ui.style.Background.Position;
 
 /**
  * @author Joshua J. Gertzen
@@ -63,7 +64,10 @@ public class Main {
     public Panel getLeftPanel(final Tree tree) {
         Panel p = new Panel();
         p.setLayout(new TableLayout(new double[][]{{0},{46, 0}}));
-        p.getChildren().add(new Image(RES_PATH + "PlaygroundDemoLogo.png"));
+        Label banner = new Label();
+        banner.getStyle().getBackground().setImage(RES_PATH + "PlaygroundDemoLogo.png");
+        banner.getStyle().getBackground().setPosition(Position.CENTER);
+        p.getChildren().add(banner);
         p.getChildren().add(tree.setLimit("0, 1"));
         return p;
     }
