@@ -51,7 +51,8 @@ public class ExampleTableLayoutSimple extends Example {
         ));
             
         List<Component> l = container.getChildren();
-        l.add(new Button("Center").setLimit("3, 3, 1, 1"));
+        l.add(new Button("Overlap").setLimit("3, 3, 1, 3"));
+        l.add(new Button("Center").setSize(100, 25).setLimit("3, 3, c, c"));
         l.add(new Button("Right").setLimit("5, 3, 1, 1"));
         l.add(new Button("Left").setLimit("1, 3, 1, 1"));
         l.add(new Button("Bottom").setLimit("1, 5, 5, 1"));
