@@ -46,8 +46,8 @@ abstract class Example {
         Panel p = new Panel();
         String desc = getDescription();
         p.getStyle().getBackground().setColor(Color.TRANSPARENT);
+        p.setUserObject(this);
         Component example = getContent();
-        example.setUserObject(this);
         p.getChildren().add(example);
         
         if (desc == null) {

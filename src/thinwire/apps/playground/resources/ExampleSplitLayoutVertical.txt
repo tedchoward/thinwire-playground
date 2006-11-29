@@ -1,0 +1,50 @@
+//Split the layout vertically, giving 100 pixels to the left component
+//and the remainder to the right component
+container.setLayout(new SplitLayout(100, true));
+container.getStyle().getBackground().setColor(Color.SLATEGRAY);
+Label first = new Label();
+Label second = new Label();
+container.getChildren().add(first);
+container.getChildren().add(second);
+
+//The rest of this is just to make the example interactive
+//and demonstrate the maximize feature of SplitLayout
+final String MAXIMIZE_FIRST = "Click to Maximize Left"; 
+final String MAXIMIZE_SECOND = "Click to Maximize Right"; 
+final String RESTORE = "Click to Restore";
+
+first.setText(MAXIMIZE_FIRST);
+first.setAlignX(AlignX.CENTER);
+first.getStyle().getBackground().setColor(Color.LIGHTCORAL);
+
+first.addActionListener("click", new ActionListener() {
+    public void actionPerformed(ActionEvent ev) {
+        Label lbl = (Label)ev.getSource();
+        
+        if (lbl.getText().equals(MAXIMIZE_FIRST)) {
+            lbl.setText(RESTORE);
+            ((SplitLayout)lbl.getContainer().getLayout()).setMaximize(SplitLayout.Maximize.FIRST);
+        } else {
+            lbl.setText(MAXIMIZE_FIRST);
+            ((SplitLayout)lbl.getContainer().getLayout()).setMaximize(SplitLayout.Maximize.NONE);
+        }
+    }
+});
+
+second.setText(MAXIMIZE_SECOND);
+second.setAlignX(AlignX.CENTER);
+second.getStyle().getBackground().setColor(Color.LIGHTBLUE);
+
+second.addActionListener("click", new ActionListener() {
+    public void actionPerformed(ActionEvent ev) {
+        Label lbl = (Label)ev.getSource();
+        
+        if (lbl.getText().equals(MAXIMIZE_SECOND)) {
+            lbl.setText(RESTORE);
+            ((SplitLayout)lbl.getContainer().getLayout()).setMaximize(SplitLayout.Maximize.SECOND);
+        } else {
+            lbl.setText(MAXIMIZE_SECOND);
+            ((SplitLayout)lbl.getContainer().getLayout()).setMaximize(SplitLayout.Maximize.NONE);
+        }
+    }
+});

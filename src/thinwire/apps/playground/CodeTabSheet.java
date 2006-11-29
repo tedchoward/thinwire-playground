@@ -236,8 +236,8 @@ class CodeTabSheet extends TabSheet {
                     List<Component> children = panel.getChildren();
                     
                     if (!children.isEmpty()) {
-                        if (children.size() == 1 && children.get(0).getUserObject() == null) {
-                            Example example = (Example)children.get(0);
+                        if (children.size() == 1 && children.get(0).getUserObject() != null) {
+                            Example example = (Example)children.get(0).getUserObject();
                             ta.setText(example.getSourceCode());
                         } else {
                             StringBuilder sb = new StringBuilder();

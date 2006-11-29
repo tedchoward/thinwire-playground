@@ -57,7 +57,6 @@ public class ExampleTableLayoutSimple extends Example {
         l.add(new Button("Left").setLimit("1, 3, 1, 1"));
         l.add(new Button("Bottom").setLimit("1, 5, 5, 1"));
         l.add(new Button("Top").setLimit("1, 1, 5, 1"));
-        //simple.getChildren().add(new Button("Overlap").setLimit("3, 3, 1, 3"));
         
         return container;
     }

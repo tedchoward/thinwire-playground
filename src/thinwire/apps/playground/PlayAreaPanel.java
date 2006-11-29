@@ -67,9 +67,9 @@ class PlayAreaPanel extends Panel {
                             rb.setSize(width, height);
                             if (x >= 0 && y >= 0) rb.setPosition(x, y);
                             y += height;
-                            rb.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
+                            //rb.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                             getChildren().add(rb);
-                            rb.getStyle().getFX().setVisibleChange(FX.Type.NONE);
+                            //rb.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                         }
                     } else {
                         Component comp = w.newInstance();
@@ -78,17 +78,17 @@ class PlayAreaPanel extends Panel {
                         int x = getInnerWidth() / 2 - comp.getWidth() / 2;
                         int y = getInnerHeight() / 2 - comp.getHeight() / 2;
                         if (x >= 0 && y >= 0) comp.setPosition(x, y);
-                        comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
+                        //comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                         getChildren().add(comp);
-                        comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
+                        //comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                     }
                 } else if (o instanceof Example) {
                     parent.setVisibleComponentEditor(false);
                     Component comp = ((Example)o).getExample();
-                    comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
+                    //comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);
-                    comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
+                    //comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                 }
             }
         });
