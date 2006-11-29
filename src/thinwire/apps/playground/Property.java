@@ -72,8 +72,9 @@ enum Property {
     FONT_BOLD(Font.class, Font.PROPERTY_FONT_BOLD, boolean.class),
     FONT_ITALIC(Font.class, Font.PROPERTY_FONT_ITALIC, boolean.class),
     FONT_UNDERLINE(Font.class, Font.PROPERTY_FONT_UNDERLINE, boolean.class),
+    FONT_STRIKE(Font.class, Font.PROPERTY_FONT_STRIKE, boolean.class),
     FONT_FAMILY(Font.class, Font.PROPERTY_FONT_FAMILY, Font.Family.class),
-    FONT_SIZE(Font.class, Font.PROPERTY_FONT_SIZE, int.class),
+    FONT_SIZE(Font.class, Font.PROPERTY_FONT_SIZE, double.class),
     FONT_COLOR(Font.class, Font.PROPERTY_FONT_COLOR, Color.class),
     BORDER_TYPE(Border.class, Border.PROPERTY_BORDER_TYPE, Border.Type.class),
     BORDER_SIZE(Border.class, Border.PROPERTY_BORDER_SIZE, int.class),
@@ -136,6 +137,8 @@ enum Property {
         } else if (type == int.class) {
             editMask = name == Component.PROPERTY_X || name == Component.PROPERTY_Y ? "-####" : "####";
             alignX = AlignX.RIGHT;
+        } else if (name == Font.PROPERTY_FONT_SIZE) {
+            editMask = "###.#";
         } else if (type == Date.class) {
             editMask = DATE_TYPE_FORMAT;
         } else if (name == MaskEditorComponent.PROPERTY_EDIT_MASK) {
@@ -154,6 +157,7 @@ enum Property {
             };
         } else if (name == Border.PROPERTY_BORDER_IMAGE) {
             options = new String[]{
+                "",
                 Main.RES_PATH + "BorderSize2.png",
                 Main.RES_PATH + "BorderSize3.png",
                 Main.RES_PATH + "BorderSize10.png",
