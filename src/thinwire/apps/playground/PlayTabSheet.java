@@ -38,10 +38,12 @@ class PlayTabSheet extends TabSheet {
     static final Color SUBTAB_BACKGROUND = Color.SILVER;
     
     static void addColumn(GridBox gb, String name) { addColumn(gb, name, true); }
-    static void addColumn(GridBox gb, String name, boolean visible) {        
+    static void addColumn(GridBox gb, String name, boolean visible) { addColumn(gb, name, visible, -1); }
+    static void addColumn(GridBox gb, String name, boolean visible, int width) {        
         GridBox.Column gbc = new GridBox.Column();
         gbc.setName(name);
         if (!visible) gbc.setVisible(false);
+        if (width != -1) gbc.setWidth(width);
         gb.getColumns().add(gbc);
     }    
     

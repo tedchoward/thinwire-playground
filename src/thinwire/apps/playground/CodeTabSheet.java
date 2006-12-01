@@ -62,7 +62,7 @@ class CodeTabSheet extends TabSheet {
         }
         
         for (Property prop : Property.values()) {                        
-            if (prop.isValidFor(comp)) {
+            if (prop.isValidFor(comp.getClass())) {
                 String name = prop.getName();
                 if (name == PROPERTY_X || name == PROPERTY_Y || name == PROPERTY_WIDTH || name == PROPERTY_HEIGHT) continue;
                 if (textComp && name == PROPERTY_TEXT) continue;                                
@@ -236,7 +236,7 @@ class CodeTabSheet extends TabSheet {
                     List<Component> children = panel.getChildren();
                     
                     if (!children.isEmpty()) {
-                        if (children.size() == 1 && children.get(0).getUserObject() != null) {
+                        if (children.size() == 1 && children.get(0).getUserObject() instanceof Example) {
                             Example example = (Example)children.get(0).getUserObject();
                             ta.setText(example.getSourceCode());
                         } else {

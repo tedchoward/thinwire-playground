@@ -245,9 +245,9 @@ enum Property {
         return editor;
     }
     
-    public boolean isValidFor(Component comp) {        
-        if (objectType.isInstance(comp) || isStyleProperty()) {
-            if (this == SCROLL && comp instanceof TabFolder) {
+    public boolean isValidFor(Class<? extends Component> clazz) {        
+        if (objectType.isAssignableFrom(clazz) || isStyleProperty()) {
+            if (this == SCROLL && TabFolder.class.isAssignableFrom(clazz)) {
                 return false;
             } else {
                 return true;

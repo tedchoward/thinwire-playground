@@ -128,6 +128,8 @@ class PropertyTabSheet extends TabSheet {
                     if (prop != null && panel.getChildren().size() > 0) {
                         for (int i = 0, cnt = panel.getChildren().size(); i < cnt; i++) {
                             Component comp = panel.getChildren().get(i);
+                            Class<? extends Component> type = ((Widget)comp.getUserObject()).getType();
+                            if (type == TabSheet.class) comp = ((TabFolder)comp).getChildren().get(((TabFolder)comp).getCurrentIndex());
                             String name = prop.getName();
                             
                             if (comp instanceof RadioButton) {
@@ -156,17 +158,22 @@ class PropertyTabSheet extends TabSheet {
                     gb.getRows().clear();
                     Component comp = panel.getChildren().get(0);
                     
-                    for (Property prop : Property.values()) {                        
-                        if (prop.isValidFor(comp) && prop.isStyleProperty() == styleProperties) {
-                            GridBox.Row row = new GridBox.Row();
-                            row.add(Main.getSimpleClassName(prop.getType()).replace('$', '.'));
-                            row.add(prop.getName());
-                            row.add(prop.getDefaultValue(comp));
-                            row.add(prop == Property.FX_VISIBLE_CHANGE ? FX.Type.NONE : prop.getValue(comp));
-                            row.add(prop);
-                            gb.getRows().add(row);
+                    if (comp.getUserObject() instanceof Widget) {
+                        Class<? extends Component> type = ((Widget)comp.getUserObject()).getType();
+                        if (type == TabSheet.class) comp = ((TabFolder)comp).getChildren().get(((TabFolder)comp).getCurrentIndex());
+                        
+                        for (Property prop : Property.values()) {                        
+                            if (prop.isValidFor(type) && prop.isStyleProperty() == styleProperties) {
+                                GridBox.Row row = new GridBox.Row();
+                                row.add(Main.getSimpleClassName(prop.getType()).replace('$', '.'));
+                                row.add(prop.getName());
+                                row.add(prop.getDefaultValue(comp));
+                                row.add(prop.getValue(comp));
+                                row.add(prop);
+                                gb.getRows().add(row);
+                            }
                         }
-                    }                    
+                    }
                 }
             }
         });

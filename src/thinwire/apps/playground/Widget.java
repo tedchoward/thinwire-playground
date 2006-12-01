@@ -56,6 +56,7 @@ enum Widget {
     MENU(Menu.class, 400, 25),
     WEB_BROWSER(WebBrowser.class, 350, 300),
     TAB_FOLDER(TabFolder.class, 350, 250),
+    TAB_SHEET(TabSheet.class, 350, 250),
     PANEL(Panel.class, 350, 250),
     SLIDER_HORIZONTAL(Slider.class),
     SLIDER_VERTICAL(Slider.class, 25, 150, "Vertical"),
@@ -81,7 +82,7 @@ enum Widget {
         Component comp = newRawInstance();
         
         for (Property prop : Property.values()) {                        
-            if (prop.isValidFor(comp)) {
+            if (prop.isValidFor(comp.getClass())) {
                 defaults.put(prop.getName(), prop.getValue(comp));
             }
         }
@@ -181,6 +182,12 @@ enum Widget {
             ((Hyperlink)comp).setLocation("http://www.thinwire.com");
         } else if (comp instanceof WebBrowser) {
             ((WebBrowser)comp).setLocation("http://www.thinwire.com");
+        } else if (comp instanceof TabSheet) {
+            TabFolder tf = (TabFolder)(comp = TAB_FOLDER.newRawInstance());
+            
+            for (int i = 1; i <= 3; i++) {            
+                tf.getChildren().add(new TabSheet("Tab Sheet " + i));
+            }
         } else if (comp instanceof TabFolder) {
             TabFolder tf = (TabFolder)comp;
             
