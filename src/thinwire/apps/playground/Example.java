@@ -39,6 +39,7 @@ abstract class Example {
                 new ExampleSplitLayoutVertical(),
                 new ExampleTableLayoutSimple(),
                 new ExampleTableLayoutComplex(),
+                new ExampleLayoutGridInterface()
         };
     }
 
@@ -90,6 +91,10 @@ abstract class Example {
         
         if (sb.length() == 0) sb.append("Unable to locate source file: " + getSourceFileName());
         return sb.toString();
+    }
+    
+    Panel getCommands(Component c) {
+    	return null;
     }
     
     abstract String getName();
