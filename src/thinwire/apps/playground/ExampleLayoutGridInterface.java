@@ -24,21 +24,29 @@ public class ExampleLayoutGridInterface extends Example {
 
 	@Override
 	Component getContent() {
-		Panel panel = new Panel();
-		panel.getStyle().getBackground().setColor(Color.BLACK);
+		Panel container = new Panel();
+		
+        container.getStyle().getBackground().setColor(Color.BLACK);
 		
 		TableLayout layout = new TableLayout();
 		layout.setMargin(1);
 		layout.setSpacing(1);
-		panel.setLayout(layout);
+		container.setLayout(layout);
 		
 		List<TableLayout.Column> columns = layout.getColumns();
-		for (int i = 0; i < 8; i++) columns.add(new TableLayout.Column(0));
+		
+        for (int i = 0; i < 8; i++) {
+            columns.add(new TableLayout.Column(0));
+        }
 		
 		List<TableLayout.Row> rows = layout.getRows();
-		for (int i = 0; i < 18; i++) rows.add(new TableLayout.Row(0));
+		
+        for (int i = 0; i < 18; i++) {
+            rows.add(new TableLayout.Row(0));
+        }
 		
 		int cnt = columns.size();
+        
 		for (TableLayout.Row r : rows) {
 			for (int i = 0; i < cnt; i++) {
 				TextField tf = new TextField();
@@ -47,7 +55,7 @@ public class ExampleLayoutGridInterface extends Example {
 			}
 		}
 		
-		return panel;
+		return container;
 	}
 
 	@Override
