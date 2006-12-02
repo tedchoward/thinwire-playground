@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import thinwire.ui.*;
+import thinwire.ui.AlignTextComponent.AlignX;
 import thinwire.ui.event.*;
 import thinwire.ui.style.FX;
 

@@ -30,7 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import thinwire.ui.*;
+import thinwire.ui.AlignTextComponent.AlignX;
+import thinwire.ui.Container.ScrollType;
 import thinwire.ui.style.*;
+
 
 /**
  * @author Joshua J. Gertzen
@@ -53,7 +56,7 @@ enum Property {
     WAIT_FOR_WINDOW(Window.class, Window.PROPERTY_WAIT_FOR_WINDOW, boolean.class),
     EDIT_ALLOWED(DropDown.class, DropDown.PROPERTY_EDIT_ALLOWED, boolean.class),
     INPUT_HIDDEN(TextField.class, TextField.PROPERTY_INPUT_HIDDEN, boolean.class),
-    SCROLL(Container.class, Container.PROPERTY_SCROLL, ScrollType.class),
+    SCROLL_TYPE(Container.class, Container.PROPERTY_SCROLL_TYPE, ScrollType.class),
     STANDARD(Button.class, Button.PROPERTY_STANDARD, boolean.class),
     BUTTON_CHECKED(RadioButton.class, RadioButton.PROPERTY_CHECKED, boolean.class),
     BOX_CHECKED(CheckBox.class, CheckBox.PROPERTY_CHECKED, boolean.class),
@@ -247,7 +250,7 @@ enum Property {
     
     public boolean isValidFor(Class<? extends Component> clazz) {        
         if (objectType.isAssignableFrom(clazz) || isStyleProperty()) {
-            if (this == SCROLL && TabFolder.class.isAssignableFrom(clazz)) {
+            if (this == SCROLL_TYPE && TabFolder.class.isAssignableFrom(clazz)) {
                 return false;
             } else {
                 return true;

@@ -24,10 +24,12 @@
  */
 package thinwire.apps.playground;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import thinwire.ui.*;
 import thinwire.ui.event.PropertyChangeEvent;
 import thinwire.ui.event.PropertyChangeListener;
-import thinwire.ui.style.FX;
 import thinwire.ui.layout.SplitLayout;
 import thinwire.ui.layout.TableLayout;
 
@@ -36,8 +38,24 @@ import thinwire.ui.layout.TableLayout;
  */
 class PlayAreaPanel extends Panel {    
     PlayAreaPanel(final PlayTabSheet parent, Tree tree) {
-        setScroll(ScrollType.AS_NEEDED);
+        setScrollType(ScrollType.AS_NEEDED);
         getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
+        
+        final PropertyChangeListener switchToFrame = new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent ev) {
+                Frame f = Application.current().getFrame();
+                Dialog d = (Dialog)ev.getSourceComponent();
+                if (d.isVisible()) d.setVisible(false);               
+                Tree.Item item = (Tree.Item)d.getUserObject();
+                d.setUserObject(null);
+                d.setLayout(null);
+                List<Component> lst = new ArrayList<Component>(d.getChildren());
+                d.getChildren().clear();
+                f.getChildren().addAll(lst);
+                f.setLayout(new SplitLayout(.25, true));
+                item.setText("Switch to Dialog");
+            }
+        };
         
         tree.addPropertyChangeListener(Tree.Item.PROPERTY_ITEM_SELECTED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
@@ -89,6 +107,24 @@ class PlayAreaPanel extends Panel {
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);
                     //comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
+                } else if (((Tree.Item)ev.getSource()).getText().indexOf("Dialog") > 0) {
+                    Frame f = Application.current().getFrame();
+                    Dialog d = new Dialog(f.getTitle());
+                    d.setUserObject(ev.getSource());
+                    d.setResizeAllowed(true);
+                    d.setBounds(25, 25, 640, 480);
+                    f.setLayout(null);
+                    List<Component> lst = new ArrayList<Component>(f.getChildren());
+                    f.getChildren().clear();
+                    d.getChildren().addAll(lst);
+                    d.setLayout(new SplitLayout(.25, true));
+                    d.setWaitForWindow(false);
+                    d.setVisible(true);
+                    d.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
+                    ((Tree.Item)ev.getSource()).setText("Switch to Frame");
+                } else if (((Tree.Item)ev.getSource()).getText().indexOf("Frame") > 0) {
+                    switchToFrame.propertyChange(
+                            new PropertyChangeEvent(Application.current().getFrame().getDialogs().get(0), Dialog.PROPERTY_VISIBLE, true, false));
                 }
             }
         });

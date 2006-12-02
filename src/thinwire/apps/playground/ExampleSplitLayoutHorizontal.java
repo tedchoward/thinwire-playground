@@ -24,7 +24,7 @@
  */
 package thinwire.apps.playground;
 
-import thinwire.ui.AlignX;
+import thinwire.ui.AlignTextComponent.AlignX;
 import thinwire.ui.Component;
 import thinwire.ui.Label;
 import thinwire.ui.Panel;

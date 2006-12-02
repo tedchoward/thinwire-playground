@@ -91,11 +91,13 @@ public class Main {
         root.getChildren().add(tiLayout);
         
         for (Example e : Example.getExamples()) {
-            Tree.Item item = new Tree.Item(e.getName());
+            Tree.Item item = new Tree.Item(e.getName(), RES_PATH + "Tutorial.png");
             item.setUserObject(e);
             tiLayout.getChildren().add(item);
         }
-
+        
+        Tree.Item tiDialog = new Tree.Item("Switch To Dialog", RES_PATH + "Tutorial.png");
+        root.getChildren().add(tiDialog);
         return tree;
     }
 }
