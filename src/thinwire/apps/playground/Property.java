@@ -87,6 +87,7 @@ enum Property {
     FX_POSITION_CHANGE(FX.class, FX.PROPERTY_FX_POSITION_CHANGE, FX.Type.class),
     FX_SIZE_CHANGE(FX.class, FX.PROPERTY_FX_SIZE_CHANGE, FX.Type.class),
     FX_VISIBLE_CHANGE(FX.class, FX.PROPERTY_FX_VISIBLE_CHANGE, FX.Type.class),
+    FX_OPACITY_CHANGE(FX.class, FX.PROPERTY_FX_OPACITY_CHANGE, FX.Type.class),
     LENGTH(RangeComponent.class, RangeComponent.PROPERTY_LENGTH, int.class),
     TF_CURRENT_INDEX(TabFolder.class, TabFolder.PROPERTY_CURRENT_INDEX, int.class),
     CURRENT_INDEX(RangeComponent.class, RangeComponent.PROPERTY_CURRENT_INDEX, int.class),
@@ -226,6 +227,15 @@ enum Property {
             for (int i = 0; i < values.length; i++) {
                 options[i + 1] = values[i].toString();
             }
+        } else if (type == FX.Type.class) {
+            FX.Type[] values = FX.Type.values();
+            options = new String[values.length + 1];
+            editAllowed = true;
+            options[0] = "5000 25 smooth";
+
+            for (int i = 0; i < values.length; i++) {
+                options[i + 1] = values[i].toString();
+            }
         }
         
         MaskEditorComponent editor;
@@ -278,24 +288,7 @@ enum Property {
             } else if (objectType == FX.class) {
                 setter.invoke(comp.getStyle().getFX(), value);
             } else {
-                String name = getName();
-                
-                if (name.equals(Component.PROPERTY_VISIBLE) || name.equals(Component.PROPERTY_X) || name.equals(Component.PROPERTY_Y) || 
-                        name.equals(Component.PROPERTY_WIDTH) || name.equals(Component.PROPERTY_HEIGHT)) {
-                    FX fx = comp.getStyle().getFX();
-                    FX.Type ftpc = fx.getPositionChange();
-                    FX.Type ftsc = fx.getSizeChange();
-                    FX.Type ftvc = fx.getVisibleChange();
-                    fx.setPositionChange(FX.Type.SMOOTH);
-                    fx.setSizeChange(FX.Type.SMOOTH);
-                    fx.setVisibleChange(FX.Type.SMOOTH);
-                    setter.invoke(comp, value);
-                    fx.setPositionChange(ftpc);
-                    fx.setSizeChange(ftsc);
-                    fx.setVisibleChange(ftvc);
-                } else {
-                    setter.invoke(comp, value);                    
-                }
+                setter.invoke(comp, value);                    
             }
         } catch (Exception e) {
             if (e instanceof RuntimeException) throw (RuntimeException)e;
