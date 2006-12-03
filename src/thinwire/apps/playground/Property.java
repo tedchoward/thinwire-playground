@@ -83,6 +83,7 @@ enum Property {
     BORDER_SIZE(Border.class, Border.PROPERTY_BORDER_SIZE, int.class),
     BORDER_COLOR(Border.class, Border.PROPERTY_BORDER_COLOR, Color.class),
     BORDER_IMAGE(Border.class, Border.PROPERTY_BORDER_IMAGE, String.class),
+    FX_OPACITY(FX.class, FX.PROPERTY_FX_OPACITY, int.class),
     FX_POSITION_CHANGE(FX.class, FX.PROPERTY_FX_POSITION_CHANGE, FX.Type.class),
     FX_SIZE_CHANGE(FX.class, FX.PROPERTY_FX_SIZE_CHANGE, FX.Type.class),
     FX_VISIBLE_CHANGE(FX.class, FX.PROPERTY_FX_VISIBLE_CHANGE, FX.Type.class),
