@@ -83,11 +83,12 @@ enum Property {
     BORDER_SIZE(Border.class, Border.PROPERTY_BORDER_SIZE, int.class),
     BORDER_COLOR(Border.class, Border.PROPERTY_BORDER_COLOR, Color.class),
     BORDER_IMAGE(Border.class, Border.PROPERTY_BORDER_IMAGE, String.class),
-    FX_OPACITY(FX.class, FX.PROPERTY_FX_OPACITY, int.class),
-    FX_POSITION_CHANGE(FX.class, FX.PROPERTY_FX_POSITION_CHANGE, FX.Type.class),
-    FX_SIZE_CHANGE(FX.class, FX.PROPERTY_FX_SIZE_CHANGE, FX.Type.class),
-    FX_VISIBLE_CHANGE(FX.class, FX.PROPERTY_FX_VISIBLE_CHANGE, FX.Type.class),
-    FX_OPACITY_CHANGE(FX.class, FX.PROPERTY_FX_OPACITY_CHANGE, FX.Type.class),
+    OPACITY(Style.class, Style.PROPERTY_OPACITY, int.class),
+    FX_POSITION_CHANGE(FX.class, FX.PROPERTY_FX_POSITION_CHANGE, Effect.Motion.class),
+    FX_SIZE_CHANGE(FX.class, FX.PROPERTY_FX_SIZE_CHANGE, Effect.Motion.class),
+    FX_VISIBLE_CHANGE(FX.class, FX.PROPERTY_FX_VISIBLE_CHANGE, Effect.Motion.class),
+    FX_OPACITY_CHANGE(FX.class, FX.PROPERTY_FX_OPACITY_CHANGE, Effect.Motion.class),
+    FX_COLOR_CHANGE(FX.class, FX.PROPERTY_FX_COLOR_CHANGE, Effect.Motion.class),
     LENGTH(RangeComponent.class, RangeComponent.PROPERTY_LENGTH, int.class),
     TF_CURRENT_INDEX(TabFolder.class, TabFolder.PROPERTY_CURRENT_INDEX, int.class),
     CURRENT_INDEX(RangeComponent.class, RangeComponent.PROPERTY_CURRENT_INDEX, int.class),
@@ -107,7 +108,7 @@ enum Property {
             this.objectType = objectType;
             this.name = name;
             this.type = type;            
-            if (isStyleProperty()) name = name.substring(Main.getSimpleClassName(objectType).length());
+            if (isStyleProperty() && objectType != Style.class) name = name.substring(Main.getSimpleClassName(objectType).length());
             name = name.length() == 1 ? String.valueOf(Character.toUpperCase(name.charAt(0))) : Character.toUpperCase(name.charAt(0)) + name.substring(1);            
             getter = objectType.getMethod((type == boolean.class ? "is" : "get") + name);
             setter = objectType.getMethod("set" + name, type);
@@ -227,8 +228,8 @@ enum Property {
             for (int i = 0; i < values.length; i++) {
                 options[i + 1] = values[i].toString();
             }
-        } else if (type == FX.Type.class) {
-            FX.Type[] values = FX.Type.values();
+        } else if (type == Effect.Motion.class) {
+            Effect.Motion[] values = Effect.Motion.values();
             options = new String[values.length + 1];
             editAllowed = true;
             options[0] = "5000 25 smooth";
@@ -287,6 +288,8 @@ enum Property {
                 setter.invoke(comp.getStyle().getBorder(), value);
             } else if (objectType == FX.class) {
                 setter.invoke(comp.getStyle().getFX(), value);
+            } else if (objectType == Style.class) {
+                setter.invoke(comp.getStyle(), value);
             } else {
                 setter.invoke(comp, value);                    
             }
@@ -306,6 +309,8 @@ enum Property {
                 return getter.invoke(comp.getStyle().getBorder());
             } else if (objectType == FX.class) {
                 return getter.invoke(comp.getStyle().getFX());
+            } else if (objectType == Style.class) {
+                return getter.invoke(comp.getStyle());
             } else if (type == Date.class) {
                 return new SimpleDateFormat(DATE_TYPE_FORMAT).format((Date)getter.invoke(comp));
             } else {            
