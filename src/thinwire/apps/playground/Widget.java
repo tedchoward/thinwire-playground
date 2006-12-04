@@ -117,7 +117,7 @@ enum Widget {
                     Menu.Item L2 = new Menu.Item();
                     L2.setText("Level 2 > Item " + i1);
                     
-                    if (i1 == 1 || i1 == 4) {
+                    if (i1 == 1) {
                         for (int i2 = 0; i2 < 5; i2++) {
                             Menu.Item L3 = new Menu.Item();
                             
@@ -128,6 +128,11 @@ enum Widget {
 
                             L2.getChildren().add(L3);
                         }
+                        
+                        if (ri == 2) L2.setEnabled(false);
+                    } else if (ri == 0 && i1 == 2) {
+                        L2.setEnabled(false);
+                        L2.setKeyPressCombo("Ctrl-Shift-K");
                     }
                     
                     L2.setImage(L2.hasChildren() ? IMG_FOLDER : IMG_FILE);

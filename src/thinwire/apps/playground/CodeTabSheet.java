@@ -33,6 +33,7 @@ import thinwire.apps.playground.EventTabSheet.EventDetail;
 import thinwire.ui.*;
 import thinwire.ui.event.PropertyChangeEvent;
 import thinwire.ui.event.PropertyChangeListener;
+import thinwire.ui.style.Border;
 import thinwire.ui.style.Font;
 
 /**
@@ -75,6 +76,7 @@ class CodeTabSheet extends TabSheet {
                 sb.append(var).append('.');
                 
                 if (prop.isStyleProperty()) {          
+                    if (prop.getName().equals(Border.PROPERTY_BORDER_TYPE) && value == Border.Type.IMAGE) continue;
                     String styleGroup = Main.getSimpleClassName(prop.getObjectType());
                     String styleName = prop.getName().substring(styleGroup.length());
                     sb.append("getStyle().get").append(styleGroup).append("().set").append(styleName);
