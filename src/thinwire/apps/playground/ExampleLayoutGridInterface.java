@@ -25,7 +25,7 @@ public class ExampleLayoutGridInterface extends Example {
 	@Override
 	Component getContent() {
 		Panel container = new Panel();
-		
+        container.setScrollType(Panel.ScrollType.AS_NEEDED);
         container.getStyle().getBackground().setColor(Color.BLACK);
 		
 		TableLayout layout = new TableLayout();
@@ -41,8 +41,8 @@ public class ExampleLayoutGridInterface extends Example {
 		
 		List<TableLayout.Row> rows = layout.getRows();
 		
-        for (int i = 0; i < 18; i++) {
-            rows.add(new TableLayout.Row(0));
+        for (int i = 0; i < 15; i++) {
+            rows.add(new TableLayout.Row(18));
         }
 		
 		int cnt = columns.size();
@@ -194,7 +194,7 @@ public class ExampleLayoutGridInterface extends Example {
 			}
 		});
 		kids.add(addRowBtn);
-		
+		/*
 		Label addColLbl = (Label) new Label("Column:").setLimit("0, 3");
 		addColLbl.setAlignX(Label.AlignX.RIGHT);
 		kids.add(addColLbl);
@@ -218,18 +218,18 @@ public class ExampleLayoutGridInterface extends Example {
 				double width = Double.parseDouble(addColSizeTf.getText());
 				TableLayout tl = (TableLayout) ((Container) c).getLayout();
 				TableLayout.Column newCol = new TableLayout.Column(width);
-				/*
+				
 				for (int i = 0, cnt = tl.getRows().size(); i < cnt; i++) {
 					TextField tf = new TextField();
 					tf.getStyle().getBorder().setSize(0);
 					newCol.add(tf);
 				}
-				*/
+				
 				tl.getColumns().add(column, newCol);
 			}
 		});
 		kids.add(addColBtn);
-		
+		*/
 		return commands;
 	}
 

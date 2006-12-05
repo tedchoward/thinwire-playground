@@ -39,7 +39,8 @@ abstract class Example {
                 new ExampleSplitLayoutVertical(),
                 new ExampleTableLayoutSimple(),
                 new ExampleTableLayoutComplex(),
-                new ExampleLayoutGridInterface()
+                new ExampleLayoutGridInterface(),
+                new ExampleCustomDropDown(),
         };
     }
 

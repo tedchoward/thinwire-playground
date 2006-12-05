@@ -19,7 +19,8 @@ public class CommandTabSheet extends TabSheet {
 		super("Commands");
 		this.panel = panel;
 		setLayout(new TableLayout(new double[][] {{0}, {0}}, 5));
-		
+        List<Component> kids = this.panel.getChildren();
+
 		tf.addPropertyChangeListener(TabFolder.PROPERTY_CURRENT_INDEX, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 if (((Integer)ev.getNewValue()) == tf.getChildren().indexOf(CommandTabSheet.this)) {

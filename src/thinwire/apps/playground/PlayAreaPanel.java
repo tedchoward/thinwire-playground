@@ -66,6 +66,7 @@ class PlayAreaPanel extends Panel {
                 
                 if (o instanceof Widget) {
                     parent.setVisibleComponentEditor(true);
+                    parent.setVisibleCommandTab(false);
                     Widget w = (Widget)o;
                     
                     if (w.getType() == RadioButton.class) {
@@ -102,7 +103,9 @@ class PlayAreaPanel extends Panel {
                     }
                 } else if (o instanceof Example) {
                     parent.setVisibleComponentEditor(false);
-                    Component comp = ((Example)o).getExample();
+                    Example e = (Example) o;
+                    if (e.getCommands(e.getExample()) != null) parent.setVisibleCommandTab(true);
+                    Component comp = e.getExample();
                     //comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);

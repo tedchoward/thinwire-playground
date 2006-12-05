@@ -86,7 +86,7 @@ public class Main {
             tiComp.getChildren().add(item);
         }
 
-        Tree.Item tiLayout = new Tree.Item("Layout", RES_PATH + "Tutorial.png");
+        Tree.Item tiLayout = new Tree.Item("Examples", RES_PATH + "Tutorial.png");
         tiLayout.setExpanded(true);
         root.getChildren().add(tiLayout);
         

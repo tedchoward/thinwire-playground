@@ -63,8 +63,12 @@ class PlayTabSheet extends TabSheet {
     
     void setVisibleComponentEditor(boolean visible) {
         for (TabSheet ts : tfEditor.getChildren()) {
-            if (ts != cts && ts != cmdTS) ts.setVisible(visible);
+            if (ts != cts) ts.setVisible(visible);
         }
+    }
+    
+    void setVisibleCommandTab(boolean visible) {
+        cmdTS.setVisible(visible);
     }
     
     TabFolder initPlayTabFolder(final PlayAreaPanel panel) {
@@ -75,7 +79,9 @@ class PlayTabSheet extends TabSheet {
         EventTabSheet ets = new EventTabSheet(panel);
         tf.getChildren().add(ets);
         tf.getChildren().add(cts = new CodeTabSheet(tf, panel, ets));
-        tf.getChildren().add(cmdTS = new CommandTabSheet(tf, panel));
+        cmdTS = new CommandTabSheet(tf, panel);
+        cmdTS.setVisible(false);
+        tf.getChildren().add(cmdTS);
 
         panel.addItemChangeListener(new ItemChangeListener() {
             public void itemChange(ItemChangeEvent ev) {
