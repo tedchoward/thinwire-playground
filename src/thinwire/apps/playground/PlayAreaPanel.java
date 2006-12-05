@@ -127,7 +127,7 @@ class PlayAreaPanel extends Panel {
                     ((Tree.Item)ev.getSource()).setText("Switch to Frame");
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Frame") > 0) {
                     switchToFrame.propertyChange(
-                            new PropertyChangeEvent(Application.current().getFrame().getDialogs().get(0), Dialog.PROPERTY_VISIBLE, true, false));
+                            new PropertyChangeEvent(Dialog.PROPERTY_VISIBLE, true, false, Application.current().getFrame().getDialogs().get(0)));
                 }
             }
         });
