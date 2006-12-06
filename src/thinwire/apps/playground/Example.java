@@ -41,6 +41,7 @@ abstract class Example {
                 new ExampleTableLayoutComplex(),
                 new ExampleLayoutGridInterface(),
                 new ExampleCustomDropDown(),
+                new ExampleRoundedBorders(),
         };
     }
 
