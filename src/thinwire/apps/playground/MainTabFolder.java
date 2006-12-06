@@ -37,6 +37,8 @@ class MainTabFolder extends TabFolder {
     MainTabFolder(Tree tree) {
         tree.addPropertyChangeListener(Tree.Item.PROPERTY_ITEM_SELECTED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
+                if (ev.getNewValue() == Boolean.FALSE) return;
+                
                 if (((Tree.Item)ev.getSource()).getUserObject() == null) {
                     setCurrentIndex(0);
                 } else {

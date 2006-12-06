@@ -1,5 +1,5 @@
 container.setScrollType(Panel.ScrollType.AS_NEEDED);
-container.getStyle().getBackground().setColor(Color.BLACK);
+container.getStyle().getBackground().setColor(Color.LIGHTGRAY);
 
 TableLayout layout = new TableLayout();
 layout.setMargin(1);

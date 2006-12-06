@@ -68,7 +68,7 @@ public class ExampleOpacity extends Example {
 
     @Override
     String getName() {
-        return "Opacity";
+        return "Effect (Opacity Change)";
     }
 
     @Override

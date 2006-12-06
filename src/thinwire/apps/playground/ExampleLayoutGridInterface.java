@@ -26,7 +26,7 @@ public class ExampleLayoutGridInterface extends Example {
 	Component getContent() {
 		Panel container = new Panel();
         container.setScrollType(Panel.ScrollType.AS_NEEDED);
-        container.getStyle().getBackground().setColor(Color.BLACK);
+        container.getStyle().getBackground().setColor(Color.LIGHTGRAY);
 		
 		TableLayout layout = new TableLayout();
 		layout.setMargin(1);
@@ -41,10 +41,10 @@ public class ExampleLayoutGridInterface extends Example {
 		
 		List<TableLayout.Row> rows = layout.getRows();
 		
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             rows.add(new TableLayout.Row(18));
         }
-		
+
 		int cnt = columns.size();
         
 		for (TableLayout.Row r : rows) {
@@ -54,6 +54,11 @@ public class ExampleLayoutGridInterface extends Example {
 				r.set(i, tf);
 			}
 		}
+
+        Component leftOver = new Label().setLimit(new TableLayout.Range(layout, 0, rows.size(), columns.size(), 1));
+        leftOver.getStyle().getBackground().setColor(Color.WHITESMOKE);
+        rows.add(new TableLayout.Row(500));
+        container.getChildren().add(leftOver);
 		
 		return container;
 	}
@@ -63,8 +68,13 @@ public class ExampleLayoutGridInterface extends Example {
 		return "TableLayout (Grid Interface)";
 	}
 	
+    @Override
+    boolean hasCommands() {
+        return true;
+    }
+    
 	@Override
-	Panel getCommands(final Component c) {
+	Panel getCommands() {
 		Panel commands = new Panel();
 		
 		TableLayout layout = new TableLayout();
@@ -78,7 +88,7 @@ public class ExampleLayoutGridInterface extends Example {
 		
 		// 10 rows, evenly sized
 		List<TableLayout.Row> rows = layout.getRows();
-		for (int i = 0; i < 10; i++) rows.add(new TableLayout.Row(0));
+		for (int i = 0; i < 10; i++) rows.add(new TableLayout.Row(22));
 		
 		List<Component> kids = commands.getChildren();
 		
@@ -110,7 +120,7 @@ public class ExampleLayoutGridInterface extends Example {
 			public void actionPerformed(ActionEvent ev) {
 				int row = Integer.parseInt(updateRowTf.getText());
 				int col = Integer.parseInt(updateColTf.getText());
-				TableLayout tl = (TableLayout) ((Container) c).getLayout();
+				TableLayout tl = (TableLayout) ((Container)content).getLayout();
 				((TextComponent) tl.getRows().get(row).get(col)).setText(updateValTf.getText());
 			}
 		});
@@ -153,7 +163,7 @@ public class ExampleLayoutGridInterface extends Example {
 					tc.getStyle().getBorder().setSize(0);
 					int row = Integer.parseInt(setEditorRowTf.getText());
 					int col = Integer.parseInt(setEditorColTf.getText());
-					TableLayout tl = (TableLayout) ((Container) c).getLayout();
+					TableLayout tl = (TableLayout) ((Container)content).getLayout();
 					tl.getRows().get(row).set(col, tc);
 				} catch (Exception e) {
 					throw new RuntimeException(e);
@@ -183,7 +193,7 @@ public class ExampleLayoutGridInterface extends Example {
 			public void actionPerformed(ActionEvent ev) {
 				int row = Integer.parseInt(addRowTf.getText());
 				double height = Double.parseDouble(addRowSizeTf.getText());
-				TableLayout tl = (TableLayout) ((Container) c).getLayout();
+				TableLayout tl = (TableLayout) ((Container)content).getLayout();
 				TableLayout.Row newRow = new TableLayout.Row(height);
 				for (int i = 0, cnt = tl.getColumns().size(); i < cnt; i++) {
 					TextField tf = new TextField();
@@ -232,5 +242,4 @@ public class ExampleLayoutGridInterface extends Example {
 		*/
 		return commands;
 	}
-
 }

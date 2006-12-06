@@ -36,7 +36,10 @@ import thinwire.ui.layout.TableLayout;
 /**
  * @author Joshua J. Gertzen
  */
-class PlayAreaPanel extends Panel {    
+class PlayAreaPanel extends Panel {
+    Dialog d1;
+    Dialog d2;
+    
     PlayAreaPanel(final PlayTabSheet parent, Tree tree) {
         setScrollType(ScrollType.AS_NEEDED);
         getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
@@ -44,14 +47,21 @@ class PlayAreaPanel extends Panel {
         final PropertyChangeListener switchToFrame = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 Frame f = Application.current().getFrame();
-                Dialog d = (Dialog)ev.getSourceComponent();
-                if (d.isVisible()) d.setVisible(false);               
-                Tree.Item item = (Tree.Item)d.getUserObject();
-                d.setUserObject(null);
-                d.setLayout(null);
-                List<Component> lst = new ArrayList<Component>(d.getChildren());
-                d.getChildren().clear();
-                f.getChildren().addAll(lst);
+                d1.removePropertyChangeListener(this);
+                d2.removePropertyChangeListener(this);
+                d1.setVisible(false);
+                d2.setVisible(false);
+                Component left = d1.getChildren().remove(0);
+                Component right = d2.getChildren().remove(0);
+                Tree.Item item = (Tree.Item)d1.getUserObject();
+                d1.setUserObject(null);
+                d2.setUserObject(null);
+                d1.setLayout(null);
+                d2.setLayout(null);
+                d1 = d2 = null;
+                
+                f.getChildren().add(left);
+                f.getChildren().add(right);
                 f.setLayout(new SplitLayout(.25, true));
                 item.setText("Switch to Dialog");
             }
@@ -59,6 +69,7 @@ class PlayAreaPanel extends Panel {
         
         tree.addPropertyChangeListener(Tree.Item.PROPERTY_ITEM_SELECTED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
+                if (ev.getNewValue() == Boolean.FALSE) return;
                 setLayout(null);
                 getChildren().clear();
                 
@@ -86,9 +97,7 @@ class PlayAreaPanel extends Panel {
                             rb.setSize(width, height);
                             if (x >= 0 && y >= 0) rb.setPosition(x, y);
                             y += height;
-                            //rb.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                             getChildren().add(rb);
-                            //rb.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                         }
                     } else {
                         Component comp = w.newInstance();
@@ -97,33 +106,41 @@ class PlayAreaPanel extends Panel {
                         int x = getInnerWidth() / 2 - comp.getWidth() / 2;
                         int y = getInnerHeight() / 2 - comp.getHeight() / 2;
                         if (x >= 0 && y >= 0) comp.setPosition(x, y);
-                        //comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                         getChildren().add(comp);
-                        //comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                     }
                 } else if (o instanceof Example) {
                     parent.setVisibleComponentEditor(false);
                     Example e = (Example) o;
-                    if (e.getCommands(e.getExample()) != null) parent.setVisibleCommandTab(true);
+                    if (e.hasCommands()) parent.setVisibleCommandTab(true);
                     Component comp = e.getExample();
-                    //comp.getStyle().getFX().setVisibleChange(FX.Type.SMOOTH);
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);
-                    //comp.getStyle().getFX().setVisibleChange(FX.Type.NONE);
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Dialog") > 0) {
                     Frame f = Application.current().getFrame();
-                    Dialog d = new Dialog(f.getTitle());
-                    d.setUserObject(ev.getSource());
-                    d.setResizeAllowed(true);
-                    d.setBounds(25, 25, 640, 480);
                     f.setLayout(null);
                     List<Component> lst = new ArrayList<Component>(f.getChildren());
                     f.getChildren().clear();
-                    d.getChildren().addAll(lst);
-                    d.setLayout(new SplitLayout(.25, true));
-                    d.setWaitForWindow(false);
-                    d.setVisible(true);
-                    d.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
+
+                    d1 = new Dialog(f.getTitle() + " Tree");
+                    d1.setLayout(new TableLayout(new double[][]{{0},{0}}));
+                    d1.setUserObject(ev.getSource());
+                    d1.setResizeAllowed(true);
+                    d1.setModal(false);
+                    d1.setBounds(25, 25, 250, 500);
+                    d1.getChildren().add(lst.get(0));
+                    d1.setVisible(true);
+                    d1.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
+
+                    d2 = new Dialog(f.getTitle() + " Content");
+                    d2.setLayout(new TableLayout(new double[][]{{0},{0}}));
+                    d2.setUserObject(ev.getSource());
+                    d2.setResizeAllowed(true);
+                    d2.setModal(false);
+                    d2.setBounds(d1.getX() + d1.getWidth() + 10, 25, 400, 500);
+                    d2.getChildren().add(lst.get(1));
+                    d2.setVisible(true);
+                    d2.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
+                    
                     ((Tree.Item)ev.getSource()).setText("Switch to Frame");
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Frame") > 0) {
                     switchToFrame.propertyChange(

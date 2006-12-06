@@ -47,25 +47,32 @@ abstract class Example {
         };
     }
 
+    Panel example;
+    Component content;
+    
     Component getExample() {
-        Panel p = new Panel();
-        String desc = getDescription();
-        p.getStyle().getBackground().setColor(Color.TRANSPARENT);
-        p.setUserObject(this);
-        Component example = getContent();
-        p.getChildren().add(example);
-        
-        if (desc == null) {
-            p.setLayout(new TableLayout(new double[][]{{0},{0}}));
-        } else {
-            p.setLayout(new TableLayout(new double[][]{{0},{30, 0}}));
-            Label lbl = new Label(desc);
-            lbl.setWrapText(true);
-            p.getChildren().add(lbl);
-            example.setLimit("0, 1");
+        if (example == null) {
+            example = new Panel();
+            String desc = getDescription();
+            example.getStyle().getBackground().setColor(Color.TRANSPARENT);
+            example.setUserObject(this);
+            
+            content = getContent();
+
+            if (desc == null) {
+                example.setLayout(new TableLayout(new double[][]{{0},{0}}));
+            } else {
+                example.setLayout(new TableLayout(new double[][]{{0},{30, 0}}));
+                Label lbl = new Label(desc);
+                lbl.setWrapText(true);
+                example.getChildren().add(lbl);
+                content.setLimit("0, 1");
+            }
+
+            example.getChildren().add(content);
         }
         
-        return p;
+        return example;
     }
 
     String getDescription() {
@@ -97,8 +104,12 @@ abstract class Example {
         return sb.toString();
     }
     
-    Panel getCommands(Component c) {
+    Panel getCommands() {
     	return null;
+    }
+    
+    boolean hasCommands() {
+        return false;
     }
     
     abstract String getName();
