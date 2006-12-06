@@ -42,6 +42,7 @@ abstract class Example {
                 new ExampleLayoutGridInterface(),
                 new ExampleCustomDropDown(),
                 new ExampleRoundedBorders(),
+                new ExampleDragAndDrop(),
         };
     }
 
