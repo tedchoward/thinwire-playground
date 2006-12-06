@@ -35,14 +35,15 @@ import thinwire.ui.style.Color;
 abstract class Example {
     static final Example[] getExamples() {
         return new Example[] {
-                new ExampleSplitLayoutHorizontal(),
-                new ExampleSplitLayoutVertical(),
-                new ExampleTableLayoutSimple(),
-                new ExampleTableLayoutComplex(),
-                new ExampleLayoutGridInterface(),
-                new ExampleCustomDropDown(),
-                new ExampleRoundedBorders(),
-                new ExampleDragAndDrop(),
+            new ExampleCustomDropDown(),
+            new ExampleDragAndDrop(),
+            new ExampleLayoutGridInterface(),
+            new ExampleOpacity(),
+            new ExampleRoundedBorders(),
+            new ExampleSplitLayoutHorizontal(),
+            new ExampleSplitLayoutVertical(),
+            new ExampleTableLayoutSimple(),
+            new ExampleTableLayoutComplex(),
         };
     }
 
