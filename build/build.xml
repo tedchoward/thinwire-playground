@@ -8,7 +8,7 @@
 		<property name="path.binary" value="${path.temp}_bin"/>
 		
 		<!-- Version Information -->
-		<property name="versionInfo.productVersion" value="1.0"/>
+		<property name="versionInfo.productVersion" value="1.1"/>
 		<property name="versionInfo.companyName" value="Custom Credit Systems"/>
 		<property name="versionInfo.originalName" value="thinwire-playground"/>
 		<property name="versionInfo.originalFilename" value="${versionInfo.originalName}.jar"/>

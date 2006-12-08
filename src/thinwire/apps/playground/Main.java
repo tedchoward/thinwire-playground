@@ -75,6 +75,9 @@ public class Main {
     public Tree initTree() {
         Tree tree = new Tree();
         Tree.Item root = tree.getRootItem();
+        String version = Application.getPlatformVersionInfo().get("productVersion");
+        root.setText("ThinWire Platform v" + version);
+        tree.setRootItemVisible(true);
         
         Tree.Item tiComp = new Tree.Item("Components", RES_PATH + "Tutorial.png");
         tiComp.setExpanded(true);
