@@ -61,14 +61,14 @@ class PlayTabSheet extends TabSheet {
         setLayout(new SplitLayout(.50));
     }   
     
-    void setVisibleComponentEditor(boolean visible) {
+    void setVisibleComponentEditor(boolean visible, boolean command) {
         for (TabSheet ts : tfEditor.getChildren()) {
-            if (ts != cts) ts.setVisible(visible);
+            if (ts == cts || ts == cmdTS) continue;
+            ts.setVisible(visible);
         }
-    }
-    
-    void setVisibleCommandTab(boolean visible) {
-        cmdTS.setVisible(visible);
+        
+        cmdTS.setVisible(command);
+        cts.setVisible(true);
     }
     
     TabFolder initPlayTabFolder(final PlayAreaPanel panel) {
@@ -85,7 +85,7 @@ class PlayTabSheet extends TabSheet {
 
         panel.addItemChangeListener(new ItemChangeListener() {
             public void itemChange(ItemChangeEvent ev) {
-                if (!panel.getChildren().isEmpty()) tf.setCurrentIndex(0);                
+                if (tf.getChildren().indexOf(cts) == tf.getCurrentIndex()) cts.loadCode();
             }
         });
 

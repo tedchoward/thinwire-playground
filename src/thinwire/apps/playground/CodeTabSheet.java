@@ -217,10 +217,16 @@ class CodeTabSheet extends TabSheet {
         return "IMG" + index;
     }
     
-    CodeTabSheet(final TabFolder tf, final Panel panel, final EventTabSheet eventTab) {
+    private TextArea ta;
+    private Panel panel;
+    private EventTabSheet eventTab;
+    
+    CodeTabSheet(final TabFolder tf, Panel panel, EventTabSheet eventTab) {
         super("Source Code");
+        this.panel = panel;
+        this.eventTab = eventTab;
         
-        final TextArea ta = new TextArea();
+        ta = new TextArea();
         ta.getStyle().getFont().setFamily(Font.Family.MONOSPACE);
         ta.setPosition(GAP, GAP);
         
@@ -235,30 +241,34 @@ class CodeTabSheet extends TabSheet {
         tf.addPropertyChangeListener(TabFolder.PROPERTY_CURRENT_INDEX, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 if (((Integer)ev.getNewValue()) == tf.getChildren().indexOf(CodeTabSheet.this)) {
-                    List<Component> children = panel.getChildren();
-                    
-                    if (!children.isEmpty()) {
-                        if (children.size() == 1 && children.get(0).getUserObject() instanceof Example) {
-                            Example example = (Example)children.get(0).getUserObject();
-                            ta.setText(example.getSourceCode());
-                        } else {
-                            StringBuilder sb = new StringBuilder();
-
-                            for (int i = 0, cnt = children.size(); i < cnt; i++) {
-                                Component comp = children.get(i);
-                                if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
-                                String var = i == 0 ? "comp" : "comp" + i;
-                                getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
-                                if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
-                            }
-
-                            ta.setText(sb.toString());
-                        }
-                    }
+                    loadCode();
                 }
             }
         });
         
         getChildren().add(ta);
+    }
+    
+    void loadCode() {
+        List<Component> children = panel.getChildren();
+        
+        if (!children.isEmpty()) {
+            if (children.size() == 1 && children.get(0).getUserObject() instanceof Example) {
+                Example example = (Example)children.get(0).getUserObject();
+                ta.setText(example.getSourceCode());
+            } else {
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0, cnt = children.size(); i < cnt; i++) {
+                    Component comp = children.get(i);
+                    if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
+                    String var = i == 0 ? "comp" : "comp" + i;
+                    getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
+                    if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
+                }
+
+                ta.setText(sb.toString());
+            }
+        }
     }
 }
