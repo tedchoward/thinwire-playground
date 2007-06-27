@@ -111,7 +111,7 @@ enum Widget {
             String IMG_FOLDER = Main.RES_PATH + "Folder.png"; 
 
             for (int ri = 0; ri < 3; ri++) {                
-                Menu.Item L1 = new Menu.Item("Level 1 > Item " + ri, IMG_MENU);
+                Menu.Item L1 = new Menu.Item("<i>Level 1</i> > Item " + ri, IMG_MENU);
                 
                 for (int i1 = 0; i1 < 4; i1++) {
                     Menu.Item L2 = new Menu.Item();
@@ -122,7 +122,7 @@ enum Widget {
                             Menu.Item L3 = new Menu.Item();
                             
                             if (i2 != 2) {
-                                L3.setText("Level 3 > Item " + i2);
+                                L3.setText("Level 3 > <b>Item</b> " + i2);
                                 L3.setImage(IMG_FILE);
                             }
 
@@ -158,12 +158,12 @@ enum Widget {
                 if (ri == 2 || ri == 3 || ri == 5) {
                     for (int i1 = 0; i1 < 4; i1++) {
                         Tree.Item L2 = new Tree.Item();
-                        L2.setText("Level 2 > Item " + i1);
+                        L2.setText("Level 2 > <border size='1' color='red' type='solid'>Item</border> " + i1);
                         
                         if (i1 == 1 || i1 == 4) {
                             for (int i2 = 0; i2 < 5; i2++) {
                                 Tree.Item L3 = new Tree.Item();
-                                L3.setText("Level 3 > Item " + i2);
+                                L3.setText("Level 3 > <s>Item</s> " + i2);
                                 L3.setImage(IMG_FILE);
                                 L2.getChildren().add(L3);
                             }
@@ -233,8 +233,14 @@ enum Widget {
     private void populateGridBox(Component comp, GridBox gb, int columnCount, int rowCount, String prefix) {
         for (int ci = 0; ci < columnCount; ci++) {
             GridBox.Column gbc = new GridBox.Column();
-            if (comp instanceof GridBox) gbc.setName("Column " + ci);
-            for (int i = 0; i < rowCount; i++) gbc.add(prefix + "C" + ci + ":R" + i);
+            if (comp instanceof GridBox) gbc.setName("Column <b>" + ci + "</b>");
+            for (int i = 0; i < rowCount; i++) {
+            	if (comp instanceof GridBox && ((GridBox)comp).isVisibleCheckBoxes() && prefix.length() == 0 && i % 2 == 0) {
+            		gbc.add(prefix + "<background color='lightsteelblue'><i>C" + ci + ":R" + i + "</i></background>");
+            	} else {
+            		gbc.add(prefix + "C" + ci + ":R" + i);
+            	}
+            }
             gb.getColumns().add(gbc);
         }
     }

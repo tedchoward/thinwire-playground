@@ -53,7 +53,7 @@ enum Property {
     EDIT_MASK(MaskEditorComponent.class, MaskEditorComponent.PROPERTY_EDIT_MASK, String.class),
     FORMAT_TEXT(MaskEditorComponent.class, MaskEditorComponent.PROPERTY_FORMAT_TEXT, boolean.class),
     TITLE(Window.class, Window.PROPERTY_TITLE, String.class),
-    WAIT_FOR_WINDOW(Window.class, Window.PROPERTY_WAIT_FOR_WINDOW, boolean.class),
+    WAIT_FOR_WINDOW(Dialog.class, Dialog.PROPERTY_WAIT_FOR_WINDOW, boolean.class),
     EDIT_ALLOWED(DropDown.class, DropDown.PROPERTY_EDIT_ALLOWED, boolean.class),
     INPUT_HIDDEN(TextField.class, TextField.PROPERTY_INPUT_HIDDEN, boolean.class),
     SCROLL_TYPE(Container.class, Container.PROPERTY_SCROLL_TYPE, ScrollType.class),
