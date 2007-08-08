@@ -18,7 +18,7 @@
   Users interested in finding out more about the ThinWire framework should visit
   the ThinWire framework website at http://www.thinwire.com. For those interested
   in discussing the details of how this demo was built, you can contact the 
-  developer via email at "Joshua Gertzen" <josh@truecode.org>.
+  developer via email at "Joshua Gertzen" <josh at truecode dot org>.
 */
 package thinwire.apps.playground;
 
