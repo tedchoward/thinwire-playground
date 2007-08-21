@@ -99,6 +99,8 @@ public class Main {
         
         Tree.Item tiDialog = new Tree.Item("Switch To Dialog", RES_PATH + "Tutorial.png");
         root.getChildren().add(tiDialog);
+        Tree.Item tiTerminate = new Tree.Item("Terminate Session", RES_PATH + "Tutorial.png");
+        root.getChildren().add(tiTerminate);
         return tree;
     }
 }

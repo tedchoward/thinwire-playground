@@ -111,6 +111,9 @@ class PlayAreaPanel extends Panel {
                     Component comp = e.getExample();
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);
+                } else if (((Tree.Item)ev.getSource()).getText().indexOf("Session") > 0) {
+                    Frame f = Application.current().getFrame();
+                	f.setVisible(false);
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Dialog") > 0) {
                     Frame f = Application.current().getFrame();
                     f.setLayout(null);
