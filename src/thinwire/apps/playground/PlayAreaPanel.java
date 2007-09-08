@@ -22,6 +22,7 @@
 */
 package thinwire.apps.playground;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import thinwire.ui.event.PropertyChangeEvent;
 import thinwire.ui.event.PropertyChangeListener;
 import thinwire.ui.layout.SplitLayout;
 import thinwire.ui.layout.TableLayout;
+import thinwire.ui.style.Color;
 
 /**
  * @author Joshua J. Gertzen
@@ -44,7 +46,7 @@ class PlayAreaPanel extends Panel {
         
         final PropertyChangeListener switchToFrame = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
-                Frame f = Application.current().getFrame();
+                Panel f = (Panel) Application.current().getFrame().getChildren().get(1);
                 d1.removePropertyChangeListener(this);
                 d2.removePropertyChangeListener(this);
                 d1.setVisible(false);
@@ -111,21 +113,43 @@ class PlayAreaPanel extends Panel {
                     Component comp = e.getExample();
                     setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
                     getChildren().add(comp);
+                } else if (o instanceof Class) {
+                	Class clazz = (Class) o;
+                	try {
+                		parent.setVisibleComponentEditor(false, false);
+                		Panel p = new Panel();
+                		p.getStyle().getBackground().setColor(Color.TRANSPARENT);
+						clazz.getMethod("run", new Class[] { Container.class }).invoke(clazz, new Object[] { p });
+						p.setUserObject(clazz);
+						setLayout(new TableLayout(new double[][]{{0},{0}}, 10));
+	                    getChildren().add(p);
+					} catch (IllegalArgumentException e) {
+						throw new RuntimeException(e);
+					} catch (SecurityException e) {
+						throw new RuntimeException(e);
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					} catch (InvocationTargetException e) {
+						throw new RuntimeException(e);
+					} catch (NoSuchMethodException e) {
+						throw new RuntimeException(e);
+					}
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Session") > 0) {
                     Frame f = Application.current().getFrame();
                 	f.setVisible(false);
                 } else if (((Tree.Item)ev.getSource()).getText().indexOf("Dialog") > 0) {
                     Frame f = Application.current().getFrame();
-                    f.setLayout(null);
-                    List<Component> lst = new ArrayList<Component>(f.getChildren());
-                    f.getChildren().clear();
+                    Panel main = (Panel) f.getChildren().get(1);
+                    List<Component> lst = new ArrayList<Component>(main.getChildren());
+                    main.getChildren().clear();
+                    main.setLayout(null);
 
                     d1 = new Dialog(f.getTitle() + " Tree");
                     d1.setLayout(new TableLayout(new double[][]{{0},{0}}));
                     d1.setUserObject(ev.getSource());
                     d1.setResizeAllowed(true);
                     d1.setModal(false);
-                    d1.setBounds(25, 25, 250, 500);
+                    d1.setBounds(25, 100, 250, 500);
                     d1.getChildren().add(lst.get(0));
                     d1.setVisible(true);
                     d1.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
@@ -135,7 +159,7 @@ class PlayAreaPanel extends Panel {
                     d2.setUserObject(ev.getSource());
                     d2.setResizeAllowed(true);
                     d2.setModal(false);
-                    d2.setBounds(d1.getX() + d1.getWidth() + 10, 25, 400, 500);
+                    d2.setBounds(d1.getX() + d1.getWidth() + 10, 100, 400, 500);
                     d2.getChildren().add(lst.get(1));
                     d2.setVisible(true);
                     d2.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);

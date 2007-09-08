@@ -24,6 +24,7 @@ package thinwire.apps.playground;
 
 import static thinwire.apps.playground.Main.GAP;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -251,22 +252,37 @@ class CodeTabSheet extends TabSheet {
         List<Component> children = panel.getChildren();
         
         if (!children.isEmpty()) {
-            if (children.size() == 1 && children.get(0).getUserObject() instanceof Example) {
-                Example example = (Example)children.get(0).getUserObject();
-                ta.setText(example.getSourceCode());
+            if (children.size() == 1) {
+            	
+            	Object userObject = children.get(0).getUserObject();
+            	if (userObject instanceof Example) {
+	                Example example = (Example)children.get(0).getUserObject();
+	                ta.setText(example.getSourceCode());
+            	} else if (userObject instanceof Class) {
+            		Class clazz = (Class) userObject;
+            		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            		Application.writeResourceToStream("class:///" + clazz.getName() + "/resources/" + clazz.getSimpleName() + ".java", baos);
+            		ta.setText(baos.toString());
+            	} else {
+            		ta.setText(generateSourceFromContainer(children));
+            	}
             } else {
-                StringBuilder sb = new StringBuilder();
-
-                for (int i = 0, cnt = children.size(); i < cnt; i++) {
-                    Component comp = children.get(i);
-                    if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
-                    String var = i == 0 ? "comp" : "comp" + i;
-                    getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
-                    if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
-                }
-
-                ta.setText(sb.toString());
+                ta.setText(generateSourceFromContainer(children));
             }
         }
+    }
+    
+    private String generateSourceFromContainer(List<Component> children) {
+    	StringBuilder sb = new StringBuilder();
+
+        for (int i = 0, cnt = children.size(); i < cnt; i++) {
+            Component comp = children.get(i);
+            if (comp instanceof RadioButton && i == 0) sb.append("RadioButton.Group rbg = new RadioButton.Group();\r\n");
+            String var = i == 0 ? "comp" : "comp" + i;
+            getSourceCode(sb, var, comp, eventTab.getCheckedEventDetails());
+            if (comp instanceof RadioButton) sb.append("rbg.add(").append(var).append(");\r\n");
+        }
+        
+        return sb.toString();
     }
 }
