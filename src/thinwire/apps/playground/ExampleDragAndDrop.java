@@ -41,7 +41,7 @@ public class ExampleDragAndDrop extends Example {
     @Override
     Component getContent() {
         Panel container = new Panel();
-        container.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
+        //container.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
         container.setLayout(new TableLayout(new double[][] {{0, 0, 0}, {0}}, 10, 5));
         
         GridBox gb = (GridBox) new GridBox().setLimit("0, 0");

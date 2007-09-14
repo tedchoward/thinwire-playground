@@ -154,7 +154,7 @@ public class ExampleCustomDropDown extends Example {
     @Override
     Component getContent() {
         Panel p = new Panel();
-        p.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
+        //p.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
         p.setLayout(new TableLayout(new double[][] {{0, 400, 0}, {0, 25, 0}}));
         p.getChildren().add(new DropDownImageChooser().setLimit("1, 1"));
         return p;

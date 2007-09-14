@@ -39,7 +39,7 @@ public class ExampleOpacity extends Example {
     Component getContent() {
         Panel container = new Panel();
         
-        container.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
+        //container.getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
         TableLayout layout = new TableLayout(new double[][] {{0, 0}, {0, 0}}, 10, 5);
         container.setLayout(layout);
         

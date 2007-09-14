@@ -51,7 +51,7 @@ class HelpTabSheet extends TabSheet {
                 if (main.getChildren().get(main.getCurrentIndex()) == HelpTabSheet.this) {
                     Tree.Item item = tree.getSelectedItem();
                     
-                    if (item != null && item.getUserObject() != null) {
+                    if (item != null && item.getUserObject() != null && item.getUserObject() instanceof Widget) {
                         Class type = ((Widget)item.getUserObject()).getType();
                         wb.setLocation(Main.DOC_PATH + Main.getSimpleClassName(type) + ".html");
                     }
