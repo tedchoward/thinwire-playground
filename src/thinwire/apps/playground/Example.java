@@ -55,7 +55,7 @@ abstract class Example {
         if (example == null) {
             example = new Panel();
             String desc = getDescription();
-            example.getStyle().getBackground().setColor(Color.TRANSPARENT);
+            //example.getStyle().getBackground().setColor(Color.TRANSPARENT);
             example.setUserObject(this);
             
             content = getContent();

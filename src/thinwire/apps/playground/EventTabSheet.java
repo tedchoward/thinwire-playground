@@ -231,7 +231,7 @@ class EventTabSheet extends TabSheet {
         });
         
         final Panel split = new Panel();
-        split.getStyle().getBackground().setColor(PlayTabSheet.SUBTAB_BACKGROUND);
+        //split.getStyle().getBackground().setColor(PlayTabSheet.SUBTAB_BACKGROUND);
         split.setPosition(GAP, GAP);
         split.getChildren().add(gb);
         split.getChildren().add(gbMsg);

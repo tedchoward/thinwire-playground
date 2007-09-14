@@ -51,8 +51,8 @@ class PlayTabSheet extends TabSheet {
     
     PlayTabSheet(Tree tree) {        
         super("Playground");
-        getStyle().getBackground().setColor(BACKGROUND);        
-        getStyle().getFont().setBold(true);
+        //getStyle().getBackground().setColor(BACKGROUND);        
+        //getStyle().getFont().setBold(true);
         PlayAreaPanel panel = new PlayAreaPanel(this, tree);
         getChildren().add(panel);
         getChildren().add(tfEditor = initPlayTabFolder(panel));
@@ -71,7 +71,7 @@ class PlayTabSheet extends TabSheet {
     
     TabFolder initPlayTabFolder(final PlayAreaPanel panel) {
         final TabFolder tf = new TabFolder();
-        tf.getStyle().getBackground().setColor(SUBTAB_BACKGROUND);
+        //tf.getStyle().getBackground().setColor(SUBTAB_BACKGROUND);
         tf.getChildren().add(new PropertyTabSheet(panel, false));
         tf.getChildren().add(new PropertyTabSheet(panel, true));
         EventTabSheet ets = new EventTabSheet(panel);

@@ -56,7 +56,7 @@ public class CommandTabSheet extends TabSheet {
                             Panel commands = example.getCommands();
         
                             if (commands != null) {
-                            	commands.getStyle().getBackground().setColor(PlayTabSheet.SUBTAB_BACKGROUND);
+                            	//commands.getStyle().getBackground().setColor(PlayTabSheet.SUBTAB_BACKGROUND);
                             	CommandTabSheet.this.getChildren().add(commands);
                             }
                         }

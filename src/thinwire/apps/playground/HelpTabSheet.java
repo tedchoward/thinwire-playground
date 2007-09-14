@@ -33,8 +33,8 @@ import thinwire.ui.style.Color;
 class HelpTabSheet extends TabSheet {
     HelpTabSheet(final Tree tree, final TabFolder main) {
         super("Component Help");
-        getStyle().getBackground().setColor(Color.GOLD);        
-        getStyle().getFont().setBold(true);
+        //getStyle().getBackground().setColor(Color.GOLD);        
+        //getStyle().getFont().setBold(true);
         final WebBrowser wb = new WebBrowser(); 
         getChildren().add(wb);
         

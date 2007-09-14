@@ -33,8 +33,8 @@ import thinwire.ui.style.Color;
 class AboutTabSheet extends TabSheet {    
     AboutTabSheet() {
         super("About this Tutorial");
-        getStyle().getBackground().setColor(Color.INDIANRED);        
-        getStyle().getFont().setBold(true);
+        //getStyle().getBackground().setColor(Color.INDIANRED);        
+        //getStyle().getFont().setBold(true);
         getChildren().add(new WebBrowser(Main.RES_PATH + "About.html"));
         
         addPropertyChangeListener(Main.SIZE_ARY, new PropertyChangeListener() {

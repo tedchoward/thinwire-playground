@@ -42,7 +42,7 @@ class PlayAreaPanel extends Panel {
     
     PlayAreaPanel(final PlayTabSheet parent, Tree tree) {
         setScrollType(ScrollType.AS_NEEDED);
-        getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
+        //getStyle().getBackground().setColor(PlayTabSheet.BACKGROUND);
         
         final PropertyChangeListener switchToFrame = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {

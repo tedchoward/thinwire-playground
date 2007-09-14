@@ -77,10 +77,10 @@ public class Main {
         
         Panel main = new Panel();
         f.getChildren().add(main.setLimit("0, 1"));
-        main.getStyle().getBackground().setColor(Color.DIMGRAY);
+        //main.getStyle().getBackground().setColor(Color.DIMGRAY);
         main.getChildren().add(tree);
         main.getChildren().add(new MainTabFolder(tree));
-        main.setLayout(new SplitLayout(.25, true));
+        main.setLayout(new SplitLayout(.25, true, 5));
     }
     
     public Panel getLeftPanel(final Tree tree) {
