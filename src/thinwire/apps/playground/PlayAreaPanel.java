@@ -145,7 +145,7 @@ class PlayAreaPanel extends Panel {
                     main.setLayout(null);
 
                     d1 = new Dialog(f.getTitle() + " Tree");
-                    d1.setLayout(new TableLayout(new double[][]{{0},{0}}));
+                    d1.setLayout(new TableLayout(new double[][]{{0},{0}}, 5));
                     d1.setUserObject(ev.getSource());
                     d1.setResizeAllowed(true);
                     d1.setModal(false);
@@ -155,7 +155,7 @@ class PlayAreaPanel extends Panel {
                     d1.addPropertyChangeListener(Dialog.PROPERTY_VISIBLE, switchToFrame);
 
                     d2 = new Dialog(f.getTitle() + " Content");
-                    d2.setLayout(new TableLayout(new double[][]{{0},{0}}));
+                    d2.setLayout(new TableLayout(new double[][]{{0},{0}}, 5));
                     d2.setUserObject(ev.getSource());
                     d2.setResizeAllowed(true);
                     d2.setModal(false);

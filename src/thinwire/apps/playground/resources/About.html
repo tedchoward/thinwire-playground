@@ -1,88 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-<title>About the ThinWire Tutorial</title>
+	<meta content="text/html; charset=utf-8" http-equiv="content-type" />
+
+	<title>About the ThinWire Tutorial</title>
+<style type="text/css">
+/*<![CDATA[*/
+	h3 {
+		font: bold 1.2em 'Trebuchet MS', Tahoma, Sans-serif;
+		text-transform: uppercase;
+		color: #555;
+	}
+	
+	body {
+		color: #666666;
+		font-family: Verdana, 'Trebuchet MS', Arial, Sans-serif;
+		font-size: 71%;
+		line-height: 1.5em;
+	}
+	
+	a {
+		color: #EC981F;
+	}
+	
+	a:hover {
+		color: #806B4D;
+	}
+/*]]>*/
+</style>
 </head>
-<body style="font-family:Tahoma, sans-serif;font-size:10pt;">
 
-<h3>Introduction</h3>
-<p>
-First, thanks for checking out the ThinWire&reg; Ajax Framework. We have been
-working around the clock to make this framework the fastest, most powerful and
-browser-independent Ajax framework ever. As it stands now, this exact
-application can run in Firefox, IE, Opera, Safari and even the slimed down
-Opera browser on the Nokia 770 Tablet PDA. Even with all the new features
-included in this release, the framework remains light and fast. So read on to
-learn about the Playground and what it can teach you about the ThinWire&reg;
-Ajax Framework.
-</p>
+<body>
+	<h3>Introduction</h3>
 
-<h3>Playground Brings Everything Together</h3>
-<p> 
-In short, the Playground allows you to interact with most of the UI
-components that ThinWire&reg; includes.  When we say interact, we're
-not talking about just being able to look at a component and click
-on a button or two.  Playground goes beyond the basics in a number of
-ways.  For instance, right after you click on a component, you can
-click on the "Component Help" tab to read the applicable API documentation
-for the component.
-</p>
+	<p>First, thanks for checking out the ThinWire® Ajax Framework. We have been working around the clock to make this framework the fastest, most powerful and browser-independent Ajax framework ever. As it stands now, this exact application can run in Firefox, IE, Opera, Safari and even the browsers included on some portable devices including the Apple iPhone and Nokia 770. So read on to learn about the Playground and what it can teach you about the ThinWire® Ajax Framework.  For more information, check out the <a href="http://www.informit.com/store/product.aspx?isbn=0132366223" onclick="window.open(this.href);return false;">ThinWire Handbook</a>.  Written by the developers, it provides a comprehensive overview of the entire framework and documents some of the more obscure features.</p>
 
-<h3>Properties and Styles</h3>
-<p>
-Additionally, you can use the "Properties" and "Style" tabs to manipulate the
-real-time state of any component, so you can see the results visually.  Another
-benefit of this is that you can quickly see all the properties and
-styles that a given component supports.  This makes finding programming
-information just a tad quicker than pulling up the javadoc.  For instance,
-if you see a propertyName called "text", then you know the component has
-both a "String getText()" method and "void setText(String text)" method.
-</p>
+	<h3>Playground Brings Everything Together</h3>
+	
+	<p>The Playground is designed to be a comprehensive demo of the framework.  The Tree on the left provides the navigation.  The Components section allows you to view and manipulate every Component in the framework as well as read the API documentation.  The Examples section show off some features of the framework that are not apparent from the Component demos.  The HandBook Examples section includes all the examples from the ThinWire Handbook including the source code.</p>  
+	
+	<h3>Other Demos Available</h3>
+	While the Playground strives to be the ultimate framework demo, we do have a few others available:
+		<ul>
+			<li><a href="http://74.86.83.80/mail" onclick="window.open(this.href);return false;">Mail Client</a> - Although not the most functional application ever written, the Mail Client is a demonstration of the ease of assembling a fairly complex user interface in a short amount of time (only spent about a week developing this)</li>
+			<li><a href="http://74.86.83.80/helloworld" onclick="window.open(this.href);return false;">Hello World</a> - The first program a developer ever writes, ThinWire Style.</li>
+			<li><a href="http://74.86.83.80/handbook" onclick="window.open(this.href);return false;">ThinWire Handbook Examples</a> - These are the code examples used in the ThinWire Handbook.</li>
+		</ul>
 
-<h3>Event Types and Event Listeners</h3>
-<p>
-Taking it a step further, you can use the "Events" tab to activate any event
-listener that the component supports. So why do that? Well, after you activate
-an event listener, the panel at the bottom of the "Events" tab will display
-real-time output anytime the component's state changes in a way that triggers
-the specified event. So for example, pull up the Button component, and then
-check the box for "ActionListener click". Now click the Button
-and you'll see that the button has been clicked in the "Event History" report.
-</p>
+	<h3>Properties and Styles</h3>
 
-<h3>Source Code, Generated Just For You</h3>
-<p>
-So you've worked your way through the properties, styles and events and now you've
-got that Button looking just like you want. Only problem is, how do you write the
-code that will create your customized button?  Well, with the Playground you just
-click the "Source Code" tab and presto, the source code for your component
-appears.  And we're not talking about some prefab cookie-cutter source code.
-Nope, the Playground generates the code necessary to create the exact component
-you've been playing with.  And as a bonus, it'll even generate the event listener
-stubs for the event types you check on the "Events" tab.
-</p>
+	<p>Additionally, you can use the "Properties" and "Style" tabs to manipulate the real-time state of any component, so you can see the results visually. Another benefit of this is that you can quickly see all the properties and styles that a given component supports. This makes finding programming information just a tad quicker than pulling up the javadoc. For instance, if you see a propertyName called "text", then you know the component has both a "String getText()" method and "void setText(String text)" method.</p>
 
-<h3>Special Examples</h3>
-<p>
-The Playground does provide the opportunity to play with all the ThinWire components.  
-In addition to being able to manipulate properties, styles, and listeners, and generate 
-source code, there are some special examples that we have prepared.  These are things
-that either aren't demonstrated well by the rest of the Playground, or we feel are so special
-that they need to be highlighted.
-</p>
+	<h3>Event Types and Event Listeners</h3>
 
-<h3>Some Lesser Known Cool Stuff</h3>
-<ul>
-<li>Real-Time edit masking is super-cool... it's a behind the scene feature that
-doesn't get a lot of attention in the Ajax buzz world, but give it a shot and we're
-sure you'll never want to edit data without it.  Just pull up the TextField component
-and set the editMask property to something like "(999) 999-9999" and then try and type into
-the field.</li>
-<li>You can drag the divider that separates the left and right side of the application.  You can
-also drag and resize the divider that separates the properties tab folder from the playground.</li>
-</ul>
+	<p>Taking it a step further, you can use the "Events" tab to activate any event listener that the component supports. So why do that? Well, after you activate an event listener, the panel at the bottom of the "Events" tab will display real-time output anytime the component's state changes in a way that triggers the specified event. So for example, pull up the Button component, and then check the box for "ActionListener click". Now click the Button and you'll see that the button has been clicked in the "Event History" report.</p>
 
+	<h3>Source Code, Generated Just For You</h3>
+
+	<p>So you've worked your way through the properties, styles and events and now you've got that Button looking just like you want. Only problem is, how do you write the code that will create your customized button? Well, with the Playground you just click the "Source Code" tab and presto, the source code for your component appears. And we're not talking about some prefab cookie-cutter source code. Nope, the Playground generates the code necessary to create the exact component you've been playing with. And as a bonus, it'll even generate the event listener stubs for the event types you check on the "Events" tab.</p>
+
+	<h3>Special Examples</h3>
+
+	<p>The Playground does provide the opportunity to play with all the ThinWire components. In addition to being able to manipulate properties, styles, and listeners, and generate source code, there are some special examples that we have prepared. These are things that either aren't demonstrated well by the rest of the Playground, or we feel are so special that they need to be highlighted.</p>
+
+	<h3>Some Lesser Known Cool Stuff</h3>
+
+	<ul>
+		<li>Real-Time edit masking is super-cool... it's a behind the scene feature that doesn't get a lot of attention in the Ajax buzz world, but give it a shot and we're sure you'll never want to edit data without it. Just pull up the TextField component and set the editMask property to something like "(999) 999-9999" and then try and type into the field.</li>
+
+		<li>You can drag the divider that separates the left and right side of the application. You can also drag and resize the divider that separates the properties tab folder from the playground.</li>
+	</ul>
 </body>
 </html>
