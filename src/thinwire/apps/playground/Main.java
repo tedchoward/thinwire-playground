@@ -23,8 +23,6 @@
 package thinwire.apps.playground;
 
 import thinwire.ui.*;
-import thinwire.ui.event.PropertyChangeEvent;
-import thinwire.ui.event.PropertyChangeListener;
 import thinwire.ui.layout.*;
 import thinwire.ui.style.Color;
 import thinwire.ui.style.Background;
@@ -46,10 +44,6 @@ public class Main {
         String text = type.getName();
         text = text.substring(text.lastIndexOf('.') + 1);
         return text;
-    }
-    
-    public static void main(String[] args) {
-        new Main();
     }
     
     public Main() {
