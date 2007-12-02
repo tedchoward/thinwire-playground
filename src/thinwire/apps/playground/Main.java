@@ -46,6 +46,10 @@ public class Main {
         return text;
     }
     
+    public static void main(String[] args) {
+        new Main();
+    }
+    
     public Main() {
         Tree tree = initTree();
         Frame f = Application.current().getFrame();
