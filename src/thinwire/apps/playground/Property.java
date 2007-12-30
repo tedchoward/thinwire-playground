@@ -62,9 +62,9 @@ enum Property {
     BUTTON_CHECKED(RadioButton.class, RadioButton.PROPERTY_CHECKED, boolean.class),
     BOX_CHECKED(CheckBox.class, CheckBox.PROPERTY_CHECKED, boolean.class),
     LINK_LOCATION(Hyperlink.class, Hyperlink.PROPERTY_LOCATION, String.class),
-    //LINK_TARGET(Hyperlink.class, Hyperlink.PROPERTY_TARGET, String.class),
-    //LINK_VISIBLE_CHROME(Hyperlink.class, Hyperlink.PROPERTY_VISIBLE_CHROME, boolean.class),
-    //LINK_RESIZE_ALLOWED(Hyperlink.class, Hyperlink.PROPERTY_RESIZE_ALLOWED, boolean.class),
+    LINK_TARGET(Hyperlink.class, Hyperlink.PROPERTY_TARGET, String.class),
+    LINK_VISIBLE_CHROME(Hyperlink.class, Hyperlink.PROPERTY_VISIBLE_CHROME, boolean.class),
+    LINK_RESIZE_ALLOWED(Hyperlink.class, Hyperlink.PROPERTY_RESIZE_ALLOWED, boolean.class),
     SELECTED_DATE(DateBox.class, DateBox.PROPERTY_SELECTED_DATE, Date.class),
     FULL_ROW_CHECK_BOX(GridBox.class, GridBox.PROPERTY_FULL_ROW_CHECK_BOX, boolean.class),
     VISIBLE_CHECK_BOXES(GridBox.class, GridBox.PROPERTY_VISIBLE_CHECK_BOXES, boolean.class),
@@ -96,7 +96,7 @@ enum Property {
     LENGTH(RangeComponent.class, RangeComponent.PROPERTY_LENGTH, int.class),
     TF_CURRENT_INDEX(TabFolder.class, TabFolder.PROPERTY_CURRENT_INDEX, int.class),
     CURRENT_INDEX(RangeComponent.class, RangeComponent.PROPERTY_CURRENT_INDEX, int.class),
-    WRAP_TEXT(Label.class, Label.PROPERTY_WRAP_TEXT, boolean.class);
+    WRAP_TEXT(LabelComponent.class, LabelComponent.PROPERTY_WRAP_TEXT, boolean.class);
     
     private static final String[] TRUE_FALSE = new String[]{"true", "false"};
     private static final String DATE_TYPE_FORMAT = "MM/dd/yyyy";
