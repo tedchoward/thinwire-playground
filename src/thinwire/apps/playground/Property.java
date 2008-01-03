@@ -43,6 +43,7 @@ enum Property {
     HEIGHT(Component.class, Component.PROPERTY_HEIGHT, int.class),
     ENABLED(Component.class, Component.PROPERTY_ENABLED, boolean.class),
     VISIBLE(Component.class, Component.PROPERTY_VISIBLE, boolean.class),
+    FOCUS(Component.class, Component.PROPERTY_FOCUS, boolean.class),
     FOCUS_CAPABLE(Component.class, Component.PROPERTY_FOCUS_CAPABLE, boolean.class),
     TEXT(TextComponent.class, TextComponent.PROPERTY_TEXT, String.class),
     IMAGE(ImageComponent.class, ImageComponent.PROPERTY_IMAGE, String.class),
