@@ -119,19 +119,6 @@ public class Main {
             tiLayout.getChildren().add(item);
         }
         
-        Tree.Item tiHandbook = new Tree.Item("Handbook Examples", RES_PATH + "Tutorial.png");
-        root.getChildren().add(tiHandbook);
-        
-        for (HandbookExampleChapter chapter: HandbookExampleChapter.values()) {
-        	Tree.Item tiChapter = new Tree.Item(chapter.toString(), RES_PATH + "Folder.png");
-        	for (Class example : chapter.getExamples()) {
-        		Tree.Item item = new Tree.Item(example.getSimpleName(), RES_PATH + "Tutorial.png");
-        		item.setUserObject(example);
-        		tiChapter.getChildren().add(item);
-        	}
-        	tiHandbook.getChildren().add(tiChapter);
-        }
-        
         Tree.Item tiDialog = new Tree.Item("Switch To Dialog", RES_PATH + "Tutorial.png");
         root.getChildren().add(tiDialog);
         Tree.Item tiTerminate = new Tree.Item("Terminate Session", RES_PATH + "Tutorial.png");
