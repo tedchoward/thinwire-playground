@@ -14,6 +14,11 @@
       <param-name>mainClass</param-name>
       <param-value>thinwire.apps.playground.Main</param-value>
     </init-param>
+
+    <init-param>
+      <param-name>styleSheet</param-name>
+      <param-value>class:///thinwire.ui.Application/resources/ThinStyle.zip</param-value>
+    </init-param>
   </servlet>
 
   <servlet-mapping>
