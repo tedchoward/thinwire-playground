@@ -25,16 +25,41 @@ package thinwire.apps.playground;
 import static thinwire.apps.playground.Main.GAP;
 import static thinwire.apps.playground.PlayTabSheet.addColumn;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
-import thinwire.ui.*;
-import thinwire.ui.event.*;
+import thinwire.ui.CheckBox;
+import thinwire.ui.Component;
+import thinwire.ui.DropDownGridBox;
+import thinwire.ui.GridBox;
+import thinwire.ui.ItemChangeEventComponent;
+import thinwire.ui.Menu;
+import thinwire.ui.MessageBox;
+import thinwire.ui.Panel;
+import thinwire.ui.TabFolder;
+import thinwire.ui.TabSheet;
+import thinwire.ui.event.ActionEvent;
+import thinwire.ui.event.ActionListener;
+import thinwire.ui.event.DropEvent;
+import thinwire.ui.event.DropListener;
+import thinwire.ui.event.ItemChangeEvent;
+import thinwire.ui.event.ItemChangeListener;
+import thinwire.ui.event.KeyPressEvent;
+import thinwire.ui.event.KeyPressListener;
+import thinwire.ui.event.PropertyChangeEvent;
+import thinwire.ui.event.PropertyChangeListener;
 import thinwire.ui.layout.SplitLayout;
 
 /**
  * @author Joshua J. Gertzen
  */
 class EventTabSheet extends TabSheet {
+	private static interface Callback {
+		void callback(Object...arguments);
+	}
+	
     static class EventDetail {
         Class listener;
         Class event;
@@ -153,14 +178,16 @@ class EventTabSheet extends TabSheet {
         
         gb.addPropertyChangeListener(GridBox.Row.PROPERTY_ROW_CHECKED, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
-                GridBox.Row row = (GridBox.Row)ev.getSource();
-                EventDetail ed = (EventDetail)row.get(COL_DETAIL);
+                final GridBox.Row row = (GridBox.Row)ev.getSource();
+                final EventDetail ed = (EventDetail)row.get(COL_DETAIL);
                 String keyPressCombo = null;
                 
                 for (int i = 0, cnt = panel.getChildren().size(); i < cnt; i++) {
-                    Component comp = panel.getChildren().get(i);
-                    Class<? extends Component> type = ((Widget)comp.getUserObject()).getType();
-                    if (type == TabSheet.class) comp = ((TabFolder)comp).getChildren().get(((TabFolder)comp).getCurrentIndex());
+                	Component c = panel.getChildren().get(i);
+                    Class<? extends Component> type = ((Widget)c.getUserObject()).getType();
+                    if (type == TabSheet.class) c = ((TabFolder)c).getChildren().get(((TabFolder)c).getCurrentIndex());
+                    
+                    final Component comp = c;
                     
                     if (ed.listener == PropertyChangeListener.class) {
                         if (ev.getNewValue() == Boolean.TRUE) {
@@ -203,17 +230,23 @@ class EventTabSheet extends TabSheet {
                     } else if (ed.listener == KeyPressListener.class) {
                         if (ed.subType.equals(CHECK_ROW)) {
                             if (ev.getNewValue() == Boolean.TRUE) {
-                                if (i == 0) keyPressCombo = getKeyPressCombo();
-                                
-                                if (keyPressCombo != null) {                        
-                                    ed.subType = keyPressCombo;
-                                    row.set(COL_EVENT_SUB_TYPE, ed.subType);
-                                    gb.getRows().add(row.getIndex(), newRow(new EventDetail(KeyPressListener.class, KeyPressEvent.class, CHECK_ROW)));
-                                    comp.addKeyPressListener(keyPressCombo, KPL);
-                                    countKPL++;
-                                } else {
-                                    break;
-                                }
+                            	if (i == 0) { 
+                            		getKeyPressCombo(new Callback() {
+										public void callback(Object... arguments) {
+											if (arguments != null) {
+												String keyPressCombo = (String) arguments[0];
+												
+												if (keyPressCombo != null) {                        
+				                                    ed.subType = keyPressCombo;
+				                                    row.set(COL_EVENT_SUB_TYPE, ed.subType);
+				                                    gb.getRows().add(row.getIndex(), newRow(new EventDetail(KeyPressListener.class, KeyPressEvent.class, CHECK_ROW)));
+				                                    comp.addKeyPressListener(keyPressCombo, KPL);
+				                                    countKPL++;
+				                                }
+											}
+										}
+	                                });
+                            	}
                             }
                         } else {
                             countKPL--;
@@ -272,18 +305,18 @@ class EventTabSheet extends TabSheet {
         "NumDash", "Num/", "Num."
     };
     
-    private String getKeyPressCombo() {
+    private void getKeyPressCombo(final Callback callback) {
         final int pad = 2;
         final int width = 125;
         final int height = 22;
         Panel p = new Panel();
-        CheckBox ctrl = new CheckBox("Ctrl");
+        final CheckBox ctrl = new CheckBox("Ctrl");
         ctrl.setBounds(pad, pad, width, height);
-        CheckBox alt = new CheckBox("Alt");
+        final CheckBox alt = new CheckBox("Alt");
         alt.setBounds(pad, ctrl.getY() + ctrl.getHeight() + pad, width, height);
-        CheckBox shift = new CheckBox("Shift");
+        final CheckBox shift = new CheckBox("Shift");
         shift.setBounds(pad, alt.getY() + alt.getHeight() + pad, width, height);
-        DropDownGridBox key = new DropDownGridBox();
+        final DropDownGridBox key = new DropDownGridBox();
         key.setEditAllowed(false);
         key.setBounds(pad, shift.getY() + shift.getHeight() + pad, width, height);        
         key.getComponent().getColumns().add(new GridBox.Column((Object[])keyNames));
@@ -294,11 +327,15 @@ class EventTabSheet extends TabSheet {
         p.getChildren().add(key);
         p.setSize(key.getX() + key.getWidth() + pad, key.getY() + key.getHeight() + pad);
         
-        if (MessageBox.confirm(null, "Choose Key Combination", p, "Ok|Cancel") == 0) {        
-            return KeyPressEvent.encodeKeyPressCombo(ctrl.isChecked(), alt.isChecked(), shift.isChecked(), key.getText());
-        } else {
-            return null;
-        }
+        MessageBox.confirm(null, "Choose Key Combination", p, "Ok|Cancel", new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				if (((Integer)ev.getSource()) == 0) {
+					callback.callback(KeyPressEvent.encodeKeyPressCombo(ctrl.isChecked(), alt.isChecked(), shift.isChecked(), key.getText()));
+				} else {
+					callback.callback((Object[])null);
+				}
+			}
+        });
     }
     
     List<EventDetail> getCheckedEventDetails() {
